@@ -1059,23 +1059,9 @@
 </head>
 <body>
     <div id="app">
-        <div id="welcomeScreen" class="welcome-screen">
-            <div class="container">
-                <h1 class="welcome-title">نظام إتقان السلامة</h1>
-                <p class="welcome-subtitle">قوانين ومعايير السلامة المعتمدة - كود المقرر: 123</p>
-                <div class="name-input-container">
-                    <input type="text" id="userNameInput" class="name-input" placeholder="أدخل اسمك" maxlength="50">
-                </div>
-                <button class="btn btn-primary" onclick="startLearning()" style="font-size: 1.1rem; padding: 16px 40px;">ابدأ التعلم</button>
-                <div class="course-stats">
-                    <div class="course-stat"><div class="course-stat-value">16</div><div class="course-stat-label">مفهوم أساسي</div></div>
-                    <div class="course-stat"><div class="course-stat-value">80+</div><div class="course-stat-label">سؤال تدريبي</div></div>
-                    <div class="course-stat"><div class="course-stat-value">70%</div><div class="course-stat-label">درجة النجاح</div></div>
-                </div>
-            </div>
-        </div>
 
-        <div id="mainApp" class="hidden">
+
+        <div id="mainApp">
             <header class="header">
                 <div class="container">
                     <div class="header-content">
@@ -1085,14 +1071,14 @@
                                 <div class="course-info">قوانين ومعايير السلامة المعتمدة</div>
                             </div>
                             <div class="user-info">
-                                <span class="user-name" id="userNameDisplay"></span>
+                                <span class="user-name hidden" id="userNameDisplay"></span>
                             </div>
                         </div>
 
                         <!-- شريط التنقل بين الأيام -->
                         <div aria-label="تنقّل أيام البرنامج" class="days-bar">
 
-          <a class="day-btn" href="index.html">
+           <a class="day-btn" href="index.html">
             <span class="day-ico ico-d1"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span>
             <span>ادارة السلامة ومنع الخسائر</span>
           </a>
@@ -1123,6 +1109,7 @@
             </span>
             <span>إدارة الأزمات والمخاطر</span>
           </a>
+
                         </div>
                     </div>
                 </div>
@@ -1210,7 +1197,7 @@
                             </div>
 
                             <div class="concept-item" id="fire_triangle">
-                                <div class="concept-title">لاعتشلاا ثلثم (Fire Triangle)</div>
+                                <div class="concept-title">مثلث الاشتعال (Fire Triangle)</div>
                                 <div class="concept-meta">الوحدة الرابعة | الصفحة: 993-995</div>
                                 <div class="concept-def">
                                     <strong>الحريق (Fire)</strong> هو تفاعل كيميائي يحدث عندما تقتلت ثلاثة عناصر أساسية:
@@ -1228,7 +1215,7 @@
                             </div>
 
                             <div class="concept-item" id="heat_transfer">
-                                <div class="concept-title">ةرارحلا لاقتنا ةيفيك (Heat Transfer Methods)</div>
+                                <div class="concept-title">كيفية انتقال الحرارة (Heat Transfer Methods)</div>
                                 <div class="concept-meta">الوحدة الرابعة | الصفحة: 1147-1151</div>
                                 <div class="concept-def">
                                     تنتقل الحرارة عبر ثلاثة طرق رئيسية:
@@ -1293,7 +1280,7 @@
                                         <tr><th>الفئة</th><th>الوصف</th><th>طريقة الإطفاء</th></tr>
                                         <tr><td>A</td><td>حرائق المواد الصلبة مثل الخشب والورق</td><td>الماء</td></tr>
                                         <tr><td>B</td><td>حرائق الزيوت والوقود القابل للاشتعال</td><td>الرغوة أو ثاني أكسيد الكربون</td></tr>
-                                        <tr><td>C</td><td>قئارح الغازات والكهرباء</td><td>مواد خاصة</td></tr>
+                                        <tr><td>C</td><td>حرائق الغازات والكهرباء</td><td>مواد خاصة</td></tr>
                                         <tr><td>D</td><td>حرائق المعادن مثل المغنيسيوم والصوديوم</td><td>مساحيق خاصة</td></tr>
                                     </table>
                                 </div>
@@ -1368,7 +1355,7 @@
                         <h2>الوحدة السادسة: أخطار الكهرباء</h2>
                         <div class="card-body">
                             <div class="concept-item" id="burns_degrees">
-                                <div class="concept-title">قوﺮﺤﻟا تﺎﺟرد (Burns Degrees)</div>
+                                <div class="concept-title">درجات الحروق (Burns Degrees)</div>
                                 <div class="concept-meta">الوحدة السادسة | الصفحة: 2573-2599</div>
                                 <div class="concept-def">
                                     تشمل الحروق 3 درجات:
@@ -1427,7 +1414,7 @@
                             </div>
 
                             <div class="concept-item" id="building_safety">
-                                <div class="concept-title">ىنبملا ءاشنإ دنع ةياقولا تاطارتشا (Building Safety Requirements)</div>
+                                <div class="concept-title">اشتراطات الوقاية عند إنشاء المبنى (Building Safety Requirements)</div>
                                 <div class="concept-meta">الوحدة السادسة | الصفحة: 3227-3258</div>
                                 <div class="concept-def">
                                     متطلبات السلامة عند إنشاء المبنى:
@@ -1445,7 +1432,7 @@
                             </div>
 
                             <div class="concept-item" id="evacuation_routes">
-                                <div class="concept-title">بوﺮﻬﻟا ﻚﻟﺎﺴﻣ (Evacuation Routes)</div>
+                                <div class="concept-title">مسالك الهروب (Evacuation Routes)</div>
                                 <div class="concept-meta">الوحدة السادسة | الصفحة: 3261-3290</div>
                                 <div class="concept-def">
                                     متطلبات مسالك الهروب:
@@ -1530,53 +1517,55 @@
                                 <div class="glossary-term-def">عملية قياس وتقييم للمخاطر وتطوير استراتيجيات لمواجهتها</div>
                             </div>
                             <div class="glossary-term">
-                                <div class="glossary-term-name">لاعتشلاا ثلثم (Fire Triangle)</div>
+                                <div class="glossary-term-name">مثلث الاشتعال (Fire Triangle)</div>
                                 <div class="glossary-term-def">العناصر الثلاثة اللازمة للاشتعال: الوقود والحرارة والأكسجين</div>
                             </div>
                             <div class="glossary-term">
-                                <div class="glossary-term-name">ديربتلا (Cooling)</div>
+                                <div class="glossary-term-name">التبريد (Cooling)</div>
                                 <div class="glossary-term-def">طريقة إطفاء بالماء لتخفيض درجة الحرارة</div>
                             </div>
                             <div class="glossary-term">
-                                <div class="glossary-term-name">قنخلا (Smothering)</div>
+                                <div class="glossary-term-name">الخنق (Smothering)</div>
                                 <div class="glossary-term-def">طريقة إطفاء بعزل الأكسجين عن اللهب</div>
                             </div>
                             <div class="glossary-term">
-                                <div class="glossary-term-name">عيوجتلا (Starvation)</div>
+                                <div class="glossary-term-name">التجويع (Starvation)</div>
                                 <div class="glossary-term-def">طريقة إطفاء بإزالة المواد القابلة للاشتعال</div>
                             </div>
                             <div class="glossary-term">
-                                <div class="glossary-term-name">نونعملا ماظنلا (Addressable System)</div>
+                                <div class="glossary-term-name">النظام المعنون (Addressable System)</div>
                                 <div class="glossary-term-def">نظام إنذار ذكي يحدد مكان الحريق بدقة</div>
                             </div>
                             <div class="glossary-term">
-                                <div class="glossary-term-name">ةسملاملا (Conduction)</div>
+                                <div class="glossary-term-name">الملامسة (Conduction)</div>
                                 <div class="glossary-term-def">انتقال الحرارة عبر سطح ملامس</div>
                             </div>
                             <div class="glossary-term">
-                                <div class="glossary-term-name">لمحلا تارايت (Convection)</div>
+                                <div class="glossary-term-name">تيارات الحمل (Convection)</div>
                                 <div class="glossary-term-def">انتقال الحرارة عبر تيارات الهواء</div>
                             </div>
                             <div class="glossary-term">
-                                <div class="glossary-term-name">عاعشلإا (Radiation)</div>
+                                <div class="glossary-term-name">الإشعاع (Radiation)</div>
                                 <div class="glossary-term-def">انتقال الحرارة عبر الأمواج دون وسط ناقل</div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="card">
-                        <h2>ملف الإنفوجرافيك</h2>
-                        <div class="card-body">
-                            <div class="infographic-slot">
-                                <div style="padding: 40px; color: var(--text-light); text-align:center;">
-                                    <div style="font-size: 4rem; margin-bottom: 20px;">📊</div>
-                                    <div>ضع الملف داخل نفس المجلد باسم <strong>unit_infographic.png</strong></div>
-                                </div>
-                            </div>
-                            <p style="margin:10px 0 0;color:#64748b;font-size:.9rem">ضع الملف داخل نفس المجلد باسم <strong>unit_infographic.png</strong>.</p>
-                        </div>
-                    </div>
+<div class="card">
+  <!-- Infographic Slot -->
+  <div class="infographic-slot">
+    <img 
+      src="index.png" 
+      alt="Infographic" 
+      style="width:100%; height:auto; display:block; border-radius:12px;"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+    >
+    <div style="display:none; padding:40px; text-align:center; color:var(--text-muted);">
+      <p style="font-size:48px; margin-bottom:16px;">📊</p>
+      <p>تعذر تحميل الملف. تأكد من وجود الصورة داخل نفس المجلد باسم <strong>unit2.png</strong></p>
+    </div>
+  </div>
                 </div>
+                </div><!-- end #study tab -->
 
                 <div id="flashcards" class="tab-content">
                     <div class="flashcard-container">
@@ -1602,22 +1591,43 @@
                 </div>
 
                 <div id="exam" class="tab-content">
-                    <div class="exam-header">
+    <div id="examGate" class="card" style="max-width:600px;margin:0 auto 24px;">
+        <h2 style="background:linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);color:#fff;padding:18px 24px;font-size:1.2rem;font-weight:700;margin:0;">
+            بدء الاختبار
+        </h2>
+        <div class="card-body" style="padding:24px;">
+            <p style="margin-bottom:16px;color:var(--text-light);">
+                أدخل اسمك واختر النموذج لبدء الاختبار.
+            </p>
+            <div class="name-input-container" style="max-width:none;margin:0 0 20px 0;">
+                <input type="text" id="userNameInput" class="name-input" placeholder="أدخل اسمك" maxlength="50">
+            </div>
+            <p style="margin-bottom:12px;font-weight:700;color:var(--primary);">اختر النموذج:</p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <button class="btn btn-primary" style="flex:1;padding:14px;" onclick="startLearning('A')">📝 النموذج أ</button>
+                <button class="btn" style="flex:1;padding:14px;background:var(--success);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;" onclick="startLearning('B')">📝 النموذج ب</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="examContent" class="hidden">
+        <div class="exam-header">
                         <div class="timer-badge" id="timerBadge"><span>⏱</span><span id="timerDisplay">60:00</span></div>
                         <div style="flex: 1;">
                             <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
                             <div class="progress-text" id="progressText">0 / 80 سؤال</div>
                         </div>
                         <div class="model-selector">
-                            <button class="model-btn active" onclick="selectModel('A')">النموذج أ</button>
-                            <button class="model-btn" onclick="selectModel('B')">النموذج ب</button>
+                            <button class="model-btn active" id="btnA" onclick="selectModel('A', this)">النموذج أ</button>
+                            <button class="model-btn" id="btnB" onclick="selectModel('B', this)">النموذج ب</button>
                         </div>
                     </div>
-                    <div id="questionsContainer"></div>
-                    <div class="exam-actions">
-                        <button class="btn btn-primary" id="submitBtn" onclick="submitExam()" disabled>تسليم الاختبار</button>
-                    </div>
-                </div>
+                            <div id="questionsContainer"></div>
+        <div class="exam-actions">
+            <button class="btn btn-primary" id="submitBtn" onclick="submitExam()" disabled>تسليم الاختبار</button>
+        </div>
+    </div>
+</div>
 
                 <div id="results" class="tab-content">
                     <div id="resultsContent">
@@ -1675,13 +1685,13 @@
             {id: "fire_classification_size", name: "تصنيف الحرائق حسب الحجم", nameEn: "Fire Classification by Size"},
             {id: "extinguishing_equipment", name: "أجهزة ومعدات الإطفاء", nameEn: "Fire Extinguishing Equipment"},
             {id: "fire_alarm_systems", name: "أنظمة إنذار الحريق", nameEn: "Fire Alarm Systems"},
-            {id: "burns_degrees", name: "قوﺮﺤﻟا تﺎﺟرد", nameEn: "Burns Degrees"},
+            {id: "burns_degrees", name: "درجات الحروق", nameEn: "Burns Degrees"},
             {id: "fire_prevention", name: "الوقاية من الحرائق", nameEn: "Fire Prevention"},
             {id: "extinguisher_usage", name: "استخدام مطفأة الحريق", nameEn: "Fire Extinguisher Usage"},
             {id: "building_safety", name: "اشتراطات الوقاية", nameEn: "Building Safety Requirements"},
-            {id: "evacuation_routes", name: "بوﺮﻬﻟا ﻚﻟﺎﺴﻣ", nameEn: "Evacuation Routes"}
+            {id: "evacuation_routes", name: "مسالك الهروب", nameEn: "Evacuation Routes"}
         ];
-
+let userName = '';
         const questionsBank = {
             "A": [
                 {id: "q1", conceptId: "risk_management_def", bloom: 1, question: "ما هو تعريف إدارة المخاطر؟", options: ["عملية قياس وتقييم للمخاطر وتطوير استراتيجيات لمواجهتها", "عملية تأمين فقط ضد المخاطر", "عملية تجنب جميع المخاطر", "عملية قبول جميع المخاطر"], correct: 0, explanation: "إدارة المخاطر هي عملية قياس وتقييم للمخاطر إضافة إلى تطوير استراتيجيات لمواجهة تلك المخاطر"},
@@ -1729,9 +1739,21 @@
         let flashcardsData = [];
         let currentCardIndex = 0;
 
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+            const tabEl = document.getElementById(tabId);
+            if (tabEl) tabEl.classList.add('active');
+            const tabBtn = document.querySelector('.nav-tab[onclick="switchTab(\'' + tabId + '\')"]');
+            if (tabBtn) tabBtn.classList.add('active');
+            if (tabId === 'dashboard') updateDashboard();
+            if (tabId === 'flashcards') { initFlashcards(); showCard(); }
+        }
+
         function init() {
             loadUserData();
             initFlashcards();
+            switchTab('study');
         }
 
         function loadUserData() {
@@ -1741,6 +1763,9 @@
                 if (data.userName) {
                     currentUser = data.userName;
                     document.getElementById('userNameInput').value = currentUser;
+                    const userNameDisplay = document.getElementById('userNameDisplay');
+                    userNameDisplay.textContent = currentUser;
+                    userNameDisplay.classList.remove('hidden');
                 }
             }
         }
@@ -1766,25 +1791,36 @@
             return saved ? JSON.parse(saved) : {};
         }
 
-        function startLearning() {
-            const nameInput = document.getElementById('userNameInput').value.trim();
-            if (!nameInput) { alert('الرجاء إدخال اسمك'); return; }
-            currentUser = nameInput;
-            saveUserData();
-            document.getElementById('userNameDisplay').textContent = currentUser;
-            document.getElementById('welcomeScreen').classList.add('hidden');
-            document.getElementById('mainApp').classList.remove('hidden');
-            updateDashboard();
-        }
+function startLearning(model) {
+    const nameInput = document.getElementById('userNameInput').value.trim();
 
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
-            if (tabId === 'dashboard') updateDashboard();
-            else if (tabId === 'flashcards') showCard();
-        }
+    if (!nameInput) {
+        alert('الرجاء إدخال اسمك');
+        return;
+    }
+
+    currentUser = nameInput;
+    currentModel = model || 'A';
+    saveUserData();
+
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    userNameDisplay.textContent = currentUser;
+    userNameDisplay.classList.remove('hidden');
+
+    const examGate = document.getElementById('examGate');
+    const examContent = document.getElementById('examContent');
+
+    if (examGate) examGate.classList.add('hidden');
+    if (examContent) examContent.classList.remove('hidden');
+
+    // تحديث أزرار النموذج
+    document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
+    const activeBtn = document.getElementById('btn' + currentModel);
+    if (activeBtn) activeBtn.classList.add('active');
+
+    startExam();
+    updateDashboard();
+}
 
         function initFlashcards() {
             flashcardsData = [
@@ -1812,12 +1848,26 @@
         function markKnown() { nextCard(); }
         function markUnknown() { nextCard(); }
 
-        function selectModel(model) {
-            if (examTimer && !confirm('تغيير النموذج سيؤدي لإلغاء الاختبار الحالي. هل أنت متأكد؟')) return;
+        function returnToGate() {
+            if (examTimer && !confirm('سيتم إلغاء الاختبار الحالي. هل أنت متأكد؟')) return;
+            if (examTimer) { clearInterval(examTimer); examTimer = null; }
+            document.getElementById('examGate').classList.remove('hidden');
+            document.getElementById('examContent').classList.add('hidden');
+            document.getElementById('questionsContainer').innerHTML = '';
+        }
+
+        function selectModel(model, btn) {
+            if (!currentUser) {
+                const nameInput = document.getElementById('userNameInput');
+                if (nameInput) nameInput.focus();
+                alert('الرجاء إدخال اسمك أولاً لبدء الاختبار');
+                return;
+            }
             if (examTimer) clearInterval(examTimer);
+            examTimer = null;
             currentModel = model;
             document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            if (btn) btn.classList.add('active');
             startExam();
         }
 
@@ -1879,12 +1929,14 @@
             const total = currentQuestions.length;
             document.getElementById('progressFill').style.width = (answered / total * 100) + '%';
             document.getElementById('progressText').textContent = answered + ' / ' + total + ' سؤال';
-            document.getElementById('submitBtn').disabled = answered < total;
+            // يُفعّل زر التسليم بعد الإجابة على سؤال واحد على الأقل
+            document.getElementById('submitBtn').disabled = answered < 1;
         }
 
         function submitExam() {
             if (examSubmitted) return;
-            if (Object.keys(userAnswers).length < currentQuestions.length && !confirm('لم تُجب على جميع الأسئلة. هل تريد التسليم؟')) return;
+            const answered = Object.keys(userAnswers).length;
+            if (answered < currentQuestions.length && !confirm('أجبت على ' + answered + ' من ' + currentQuestions.length + ' سؤال. هل تريد التسليم الآن؟')) return;
             examSubmitted = true;
             clearInterval(examTimer);
             let correct = 0;

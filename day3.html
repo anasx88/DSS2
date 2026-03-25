@@ -1275,7 +1275,7 @@
                 <!-- شريط التنقل بين الأيام -->
                 <div aria-label="تنقّل أيام البرنامج" class="days-bar">
 
-          <a class="day-btn" href="index.html">
+                             <a class="day-btn" href="index.html">
             <span class="day-ico ico-d1"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span>
             <span>ادارة السلامة ومنع الخسائر</span>
           </a>
@@ -1306,6 +1306,7 @@
             </span>
             <span>إدارة الأزمات والمخاطر</span>
           </a>
+
                 </div>
             </div>
         </div>
@@ -1940,19 +1941,21 @@
                 </div>
             </div>
 
-            <!-- Infographic Slot -->
-            <div class="card">
-                <h2>ملف الإنفوجرافيك</h2>
-                <div class="infographic-slot">
-                    <div style="padding: 40px; color: var(--text-muted); text-align:center;">
-                        <p style="font-size: 48px; margin-bottom: 16px;">📊</p>
-                        <p>ضع الملف داخل نفس المجلد باسم <strong>unit_infographic.png</strong></p>
-                    </div>
+<div id="study" class="tab-content active">
+  <!-- Infographic Slot -->
+  <div class="infographic-slot">
+    <img 
+      src="index.png" 
+      alt="Infographic" 
+      style="width:100%; height:auto; display:block; border-radius:12px;"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+    >
+    <div style="display:none; padding:40px; text-align:center; color:var(--text-muted);">
+      <p style="font-size:48px; margin-bottom:16px;">📊</p>
+      <p>تعذر تحميل الملف. تأكد من وجود الصورة داخل نفس المجلد باسم <strong>unit3.png</strong></p>
+    </div>
+  </div>
                 </div>
-                <p style="margin:10px 0 0;color:#64748b;font-size:.9rem">
-                    ضع الملف داخل نفس المجلد باسم <strong>unit_infographic.png</strong>.
-                </p>
-            </div>
         </section>
 
         <!-- Exam Tab -->
