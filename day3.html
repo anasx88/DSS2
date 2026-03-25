@@ -1,0 +1,4389 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إتقان السلامة والصحة المهنية | SMP v2.5</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #2563eb;
+            --accent: #f59e0b;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --warning: #d97706;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 12px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo-text h1 {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .logo-text span {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .timer-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timer-badge.warning {
+            background: var(--warning);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            background: transparent;
+            border-bottom: none;
+            padding: 0 0 4px 0;
+            position: sticky;
+            top: 108px;
+            z-index: 90;
+        }
+
+        .nav-tabs-wrapper {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,.09);
+            padding: 6px 8px;
+            gap: 4px;
+            margin: 12px auto 0;
+            max-width: 700px;
+            justify-content: center;
+        }
+
+        .nav-tabs-wrapper::-webkit-scrollbar { display: none; }
+
+        .nav-tab {
+            padding: 10px 18px;
+            background: none;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .nav-tab .t-ico { font-size: 16px; line-height: 1; }
+
+        .nav-tab:hover {
+            color: var(--primary);
+            background: #f1f5f9;
+        }
+
+        .nav-tab.active {
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 4px 12px rgba(37,99,235,.35);
+        }
+
+        /* Days bar */
+        .days-bar {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            gap: 6px;
+            align-items: center;
+            width: 100%;
+            margin-top: 8px;
+            padding: 6px 10px 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            border-top: 1px solid rgba(255,255,255,.15);
+        }
+        .days-bar::-webkit-scrollbar { display: none; }
+
+        .day-btn {
+            padding: 6px 12px;
+            gap: 7px;
+            border-radius: 10px;
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            transition: background .2s, transform .15s;
+            color: #fff;
+            font-size: 12.5px;
+            font-weight: 700;
+        }
+        .day-btn:visited { color: #fff; }
+        .day-btn:hover { background: rgba(255,255,255,.18); transform: translateY(-1px); }
+        .day-btn.active { background: rgba(255,255,255,.24); outline: 2px solid rgba(255,255,255,.35); }
+
+        .day-ico {
+            width: 28px; height: 28px;
+            border-radius: 999px;
+            display: inline-grid;
+            place-items: center;
+            background: var(--fill, #2563eb);
+            color: var(--stroke, #fff);
+            box-shadow: 0 6px 18px rgba(0,0,0,.18);
+            flex-shrink: 0;
+        }
+        .day-ico svg {
+            width: 16px; height: 16px;
+            display: block;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .ico-d1 { --fill:#2563eb; }
+        .ico-d2 { --fill:#16a34a; }
+        .ico-d3 { --fill:#065f46; }
+        .ico-d4 { --fill:#f59e0b; }
+        .ico-d5 { --fill:#9333ea; }
+        .ico-d6 { --fill:#0f172a; }
+        .ico-d7 { --fill:#b91c1c; }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 24px 0;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+
+        .card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin: 20px 0 12px;
+        }
+
+        /* Study Section - Scoped Styles */
+        #study .card {
+            margin-bottom: 24px;
+        }
+
+        #study .concept-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border-right: 4px solid var(--secondary);
+        }
+
+        #study .concept-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        #study .concept-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        #study .concept-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        #study .concept-def {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        #study .concept-def ul,
+        #study .concept-def ol {
+            padding-right: 20px;
+            margin: 12px 0;
+        }
+
+        #study .concept-def li {
+            margin-bottom: 8px;
+        }
+
+        #study .concept-example {
+            background: #ecfdf5;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+            font-size: 14px;
+            border-right: 3px solid var(--success);
+        }
+
+        #study .concept-example::before {
+            content: 'مثال: ';
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        #study .exam-angle {
+            background: #fff7ed;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+            font-size: 14px;
+            border-right: 3px solid var(--accent);
+        }
+
+        #study .exam-angle::before {
+            content: 'زاوية الامتحان: ';
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        #study .confusion-box {
+            background: #fef2f2;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+            font-size: 14px;
+            border-right: 3px solid var(--danger);
+        }
+
+        #study .confusion-box::before {
+            content: 'نقطة الالتباس: ';
+            font-weight: 700;
+            color: var(--danger);
+        }
+
+        /* Risk Matrix */
+        #study .risk-matrix {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 4px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        #study .matrix-header {
+            background: var(--primary);
+            color: white;
+            padding: 12px 8px;
+            font-weight: 700;
+            border-radius: 4px;
+        }
+
+        #study .matrix-cell {
+            padding: 16px 8px;
+            font-weight: 700;
+            border-radius: 4px;
+            color: white;
+        }
+
+        #study .matrix-low {
+            background: #22c55e;
+        }
+
+        #study .matrix-medium {
+            background: #eab308;
+        }
+
+        #study .matrix-high {
+            background: #f97316;
+        }
+
+        #study .matrix-critical {
+            background: #dc2626;
+        }
+
+        /* SWOT Grid */
+        #study .swot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        #study .swot-box {
+            padding: 20px;
+            border-radius: 12px;
+            min-height: 120px;
+        }
+
+        #study .swot-box h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        #study .swot-box ul {
+            padding-right: 16px;
+            font-size: 14px;
+        }
+
+        #study .swot-box li {
+            margin-bottom: 6px;
+        }
+
+        #study .swot-strengths {
+            background: #dcfce7;
+            border-right: 4px solid #16a34a;
+        }
+
+        #study .swot-weaknesses {
+            background: #fee2e2;
+            border-right: 4px solid #dc2626;
+        }
+
+        #study .swot-opportunities {
+            background: #dbeafe;
+            border-right: 4px solid #2563eb;
+        }
+
+        #study .swot-threats {
+            background: #fef3c7;
+            border-right: 4px solid #f59e0b;
+        }
+
+        /* Glossary */
+        #study .glossary-term {
+            background: #f1f5f9;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #study .glossary-term strong {
+            color: var(--primary);
+        }
+
+        /* Infographic Slot */
+        #study .infographic-slot {
+            background: #f8fafc;
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        #study .infographic-slot img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Comparison Table */
+        #study .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        #study .comparison-table th,
+        #study .comparison-table td {
+            padding: 12px;
+            border: 1px solid var(--border);
+            text-align: right;
+        }
+
+        #study .comparison-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+        }
+
+        #study .comparison-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        /* Exam Section */
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .progress-container {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--secondary));
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .progress-text {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .question-text {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .option-item:hover {
+            background: #f1f5f9;
+            border-color: var(--secondary);
+        }
+
+        .option-item.selected {
+            background: #dbeafe;
+            border-color: var(--secondary);
+        }
+
+        .option-item.correct {
+            background: #dcfce7;
+            border-color: var(--success);
+        }
+
+        .option-item.wrong {
+            background: #fee2e2;
+            border-color: var(--danger);
+        }
+
+        .option-item input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+
+        .option-label {
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 28px;
+        }
+
+        .explanation {
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation-correct {
+            background: #dcfce7;
+            border-right: 4px solid var(--success);
+        }
+
+        .explanation-wrong {
+            background: #fee2e2;
+            border-right: 4px solid var(--danger);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e40af;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #15803d;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        /* Results Section */
+        .results-summary {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .score-circle {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border: 4px solid var(--success);
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border: 4px solid var(--danger);
+        }
+
+        .score-value {
+            font-size: 48px;
+            font-weight: 800;
+        }
+
+        .score-circle.pass .score-value {
+            color: var(--success);
+        }
+
+        .score-circle.fail .score-value {
+            color: var(--danger);
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .result-message {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .result-message.pass {
+            color: var(--success);
+        }
+
+        .result-message.fail {
+            color: var(--danger);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Concept Mastery */
+        .concept-mastery-item {
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .concept-mastery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .concept-mastery-name {
+            font-weight: 700;
+        }
+
+        .concept-mastery-score {
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .concept-mastery-score.mastered {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .concept-mastery-score.weak {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .mastery-bar {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .mastery-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+
+        .mastery-fill.mastered {
+            background: var(--success);
+        }
+
+        .mastery-fill.weak {
+            background: var(--danger);
+        }
+
+        /* Flashcards */
+        .flashcard-container {
+            perspective: 1000px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .flashcard {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            min-height: 300px;
+            cursor: pointer;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            backface-visibility: hidden;
+        }
+
+        .flashcard-back {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            bottom: 40px;
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
+        }
+
+        .flashcard-term {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .flashcard-hint {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .flashcard-definition {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .flashcard-exam-tip {
+            background: #fff7ed;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 16px;
+            font-size: 14px;
+            border-right: 3px solid var(--accent);
+        }
+
+        .flashcard-nav {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .flashcard-counter {
+            text-align: center;
+            margin-top: 16px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .dashboard-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .attempt-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .attempt-item:last-child {
+            border-bottom: none;
+        }
+
+        .attempt-date {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .attempt-score {
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .attempt-score.pass {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .attempt-score.fail {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        /* Model Selection */
+        .model-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .model-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .model-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .model-card.selected {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .model-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .model-badge.model-a {
+            background: #dbeafe;
+            color: var(--primary);
+        }
+
+        .model-badge.model-b {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .model-badge.model-c {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .model-card h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .model-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .model-stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+            font-size: 13px;
+        }
+
+        .model-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .welcome-section h2 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .welcome-section p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .course-info {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .course-info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+        }
+
+        .course-info-item i {
+            font-size: 20px;
+        }
+
+        /* Name Input */
+        .name-input-container {
+            max-width: 400px;
+            margin: 0 auto 32px;
+        }
+
+        .name-input-container input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 16px;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+
+        .name-input-container input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-top-row {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .days-bar { gap: 4px; padding: 4px 6px 6px; }
+            .day-btn span:last-child { display: none; }  /* hide text, show only icon on mobile */
+            .day-btn { padding: 6px 8px; }
+
+            .nav-tab {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .nav-tabs-wrapper { max-width: 100%; justify-content: flex-start; }
+
+            .card {
+                padding: 16px;
+            }
+
+            .card h2 {
+                font-size: 18px;
+            }
+
+            #study .risk-matrix {
+                font-size: 11px;
+            }
+
+            #study .matrix-cell,
+            #study .matrix-header {
+                padding: 8px 4px;
+            }
+
+            #study .swot-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .question-text {
+                font-size: 15px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .flashcard {
+                padding: 24px;
+                min-height: 250px;
+            }
+
+            .flashcard-term {
+                font-size: 20px;
+            }
+        }
+
+        /* Hidden elements */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border-right: 4px solid var(--secondary);
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border-right: 4px solid var(--warning);
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .tag-bloom-recall {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .tag-bloom-understand {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .tag-bloom-apply {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .tag-bloom-analyze {
+            background: #fce7f3;
+            color: #9d174d;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-top-row">
+                    <div class="logo">
+                        <div class="logo-icon">🛡️</div>
+                        <div class="logo-text">
+                            <h1>نظام إتقان السلامة والصحة المهنية</h1>
+                            <span>SMP v2.5 | مقرر 121 - دبلوم الأمن والسلامة</span>
+                        </div>
+                    </div>
+                    <div class="user-info">
+                        <div class="timer-badge" id="examTimer">
+                            <span>⏱️</span>
+                            <span id="timerValue">60:00</span>
+                        </div>
+                        <span id="userNameDisplay"></span>
+                    </div>
+                </div>
+
+                <!-- شريط التنقل بين الأيام -->
+                <div aria-label="تنقّل أيام البرنامج" class="days-bar">
+
+          <a class="day-btn" href="index.html">
+            <span class="day-ico ico-d1"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span>
+            <span>ادارة السلامة ومنع الخسائر</span>
+          </a>
+          <a class="day-btn" href="day2.html">
+            <span class="day-ico ico-d2"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+            <span>قوانين ومعايير السلامة</span>
+          </a>
+
+          <a class="day-btn" href="day3.html">
+            <span class="day-ico ico-d4"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 12L2.5 8.5"/></svg></span>
+            <span>السلامة والصحة المهنية</span>
+          </a>
+          <a class="day-btn" href="day4.html">
+            <span class="day-ico ico-d5"><svg viewBox="0 0 24 24"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-3.2-4.4"/></svg></span>
+            <span>وسائل الإعلام</span>
+          </a>
+          <a class="day-btn" href="day5.html">
+            <span class="day-ico ico-d6"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+            <span>التخطيط الأمني</span>
+          </a>
+          <a class="day-btn" href="day6.html">
+            <span class="day-ico ico-d7"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+            <span>التعامل مع مسرح الحوادث</span>
+          </a>
+          <a class="day-btn" href="day7.html">
+            <span class="day-ico ico-d3">
+              <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </span>
+            <span>إدارة الأزمات والمخاطر</span>
+          </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-tabs">
+        <div class="container">
+            <div class="nav-tabs-wrapper">
+                <button class="nav-tab active" data-tab="study" aria-label="قسم الدراسة">
+                    <span class="t-ico">📚</span> الدراسة
+                </button>
+                <button class="nav-tab" data-tab="exam" aria-label="قسم الاختبار">
+                    <span class="t-ico">📝</span> الاختبار
+                </button>
+                <button class="nav-tab" data-tab="flashcards" aria-label="قسم البطاقات">
+                    <span class="t-ico">🎯</span> البطاقات
+                </button>
+                <button class="nav-tab" data-tab="dashboard" aria-label="لوحة التحكم">
+                    <span class="t-ico">📊</span> لوحة التحكم
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Study Tab -->
+        <section id="study" class="tab-content active">
+            <!-- Lesson 1: History -->
+            <div class="card">
+                <h2>الدرس الأول: تاريخ السلامة والصحة المهنية</h2>
+
+                <div class="concept-item" id="concept-history-intro">
+                    <div class="concept-title">السلامة والصحة المهنية (Occupational Safety and Health)</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الأول</span>
+                        <span>📄 الصفحة: 1-2</span>
+                    </div>
+                    <div class="concept-def">
+                        مجال علمي يهتم بحماية العمال من المخاطر التي يتعرضون لها في بيئة العمل، ويشمل الوقاية من الحوادث والأمراض المهنية.
+                    </div>
+                    <div class="exam-angle">تعريف المفهوم الأساسي ونشأته التاريخية</div>
+                </div>
+
+                <div class="concept-item" id="concept-history-development">
+                    <div class="concept-title">التطور التاريخي للسلامة المهنية</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الأول</span>
+                        <span>📄 الصفحة: 2-3</span>
+                    </div>
+                    <div class="concept-def">
+                        <ul>
+                            <li>قبل الثورة الصناعية: كان العمال يتعرضون لمخاطر يومية في حياتهم دون حماية</li>
+                            <li>العصر الوسيط (1494-1555): باراسيلسوس كتب عن الأمراض المهنية</li>
+                            <li>1633-1714: رامازيني كتب "De Morbis Artificium" عن أمراض الحرفيين</li>
+                            <li>1833: إنشاء قانون المفتشين في بريطانيا</li>
+                            <li>1835: أول قانون لعمل الأطفال في الولايات المتحدة الأمريكية</li>
+                            <li>1836: ظهور شهادات الميلاد</li>
+                        </ul>
+                    </div>
+                    <div class="exam-angle">الترتيب الزمني للتطورات التاريخية المهمة</div>
+                </div>
+            </div>
+
+            <!-- Lesson 2: Occupational Accidents -->
+            <div class="card">
+                <h2>الدرس الثاني: الحوادث والأمراض المهنية</h2>
+
+                <div class="concept-item" id="concept-accident-definition">
+                    <div class="concept-title">الحادث المهني (Occupational Accident)</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الثاني</span>
+                        <span>📄 الصفحة: 4-5</span>
+                    </div>
+                    <div class="concept-def">
+                        حدث مفاجئ يقع للعامل أثناء تأدية عمله أو بسببه، مما يؤدي إلى إصابته أو وفاته أو فقدانه قدرته على العمل.
+                    </div>
+                    <div class="concept-example">سقوط عامل من ارتفاع أثناء العمل في موقع بناء</div>
+                    <div class="exam-angle">تمييز الحادث المهني عن الحادث العادي</div>
+                </div>
+
+                <div class="concept-item" id="concept-accident-stats">
+                    <div class="concept-title">إحصائيات الحوادث المهنية في السعودية 2023</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الثاني</span>
+                        <span>📄 الصفحة: 5</span>
+                    </div>
+                    <div class="concept-def">
+                        <ul>
+                            <li>انخفاض بنسبة 8% في التأمينات الاجتماعية</li>
+                            <li>تسجيل 27133 إصابة</li>
+                            <li>أكثر أسباب الإصابات: التعرض للقوى (7413 إصابة)</li>
+                            <li>يليها: الوقوع (15352 إصابة)</li>
+                            <li>معدل الإصابات: 25.9 إصابة لكل 100 ألف عامل</li>
+                        </ul>
+                    </div>
+                    <div class="exam-angle">الأرقام والنسب المئوية للحوادث</div>
+                </div>
+
+                <div class="concept-item" id="concept-disease-criteria">
+                    <div class="concept-title">معايير تشخيص المرض المهني</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الثاني</span>
+                        <span>📄 الصفحة: 6</span>
+                    </div>
+                    <div class="concept-def">
+                        <ol>
+                            <li>وجود دليل على التعرض الكافي للمادة الكيميائية أو الخطر</li>
+                            <li>تطابق الآثار المعروفة المرتبطة بالمادة الكيميائية أو الخطر</li>
+                            <li>فترة زمنية بين التعرض والتأثير تتفق مع الفسيولوجيا المرضية</li>
+                        </ol>
+                    </div>
+                    <div class="exam-angle">العلاقة السببية بين التعرض والمرض</div>
+                </div>
+
+                <div class="concept-item" id="concept-disease-info">
+                    <div class="concept-title">المعلومات اللازمة لتصنيف الأمراض المهنية</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الثاني</span>
+                        <span>📄 الصفحة: 6</span>
+                    </div>
+                    <div class="concept-def">
+                        <ul>
+                            <li>حدة التعرض (شدة التعرض)</li>
+                            <li>مدة التعرض (فترة التعرض)</li>
+                            <li>فترة الحضانة (فترة التحضر)</li>
+                            <li>الفترة الزمنية بين التعرض الأولي وظهور الآثار السريرية</li>
+                        </ul>
+                    </div>
+                    <div class="exam-angle">تحديد العلاقة الزمنية السببية</div>
+                </div>
+            </div>
+
+            <!-- Lesson 3: Respiratory Diseases -->
+            <div class="card">
+                <h2>الدرس الثالث: الأمراض المهنية المتعلقة بالجهاز التنفسي</h2>
+
+                <div class="concept-item" id="concept-respiratory-intro">
+                    <div class="concept-title">الجهاز التنفسي والأمراض المهنية</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الثالث</span>
+                        <span>📄 الصفحة: 7</span>
+                    </div>
+                    <div class="concept-def">
+                        يتعرض الجهاز التنفسي لأكثر من 80% من المواد الضارة في بيئة العمل. يشمل الجهاز التنفسي الأنف والحنجرة والقصبة الهوائية والرئتين.
+                    </div>
+                    <div class="exam-angle">فهم التشريح الوظيفي للجهاز التنفسي</div>
+                </div>
+
+                <div class="concept-item" id="concept-asthma">
+                    <div class="concept-title">الربو المهني (Occupational Asthma)</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الثالث</span>
+                        <span>📄 الصفحة: 8-9</span>
+                    </div>
+                    <div class="concept-def">
+                        مرض تنفسي يحدث نتيجة التعرض لمواد مهنية في بيئة العمل. يمكن أن يتطور الربو بعد فترة حضانة تتراوح بين 4-8 ساعات من التعرض.
+                        <br><br>
+                        <strong>الأنواع:</strong>
+                        <ul>
+                            <li>الربو المحدد بالمناعة (IgE-mediated)</li>
+                            <li>الربو غير المحدد بالمناعة</li>
+                        </ul>
+                    </div>
+                    <div class="concept-example">ربو العاملين في مصانع الأخشاب نتيجة استنشاق غبار الخشب</div>
+                    <div class="exam-angle">التمييز بين أنواع الربو المهني</div>
+                    <div class="confusion-box">يصعب تشخيص الربو المهني إذا كان الشخص يعاني من ربو سابق</div>
+                </div>
+
+                <div class="concept-item" id="concept-pneumoconiosis">
+                    <div class="concept-title">تلبُّد الرئة (Pneumoconiosis)</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الثالث</span>
+                        <span>📄 الصفحة: 10-11</span>
+                    </div>
+                    <div class="concept-def">
+                        مجموعة من أمراض الرئة الناجمة عن استنشاق الغبار وترسبه في الرئتين. تتضمن:
+                        <ul>
+                            <li><strong>السيليكوزيس (Silicosis):</strong> نتيجة استنشاق غبار السيليكا</li>
+                            <li><strong>الأسبستوزيس (Asbestosis):</strong> نتيجة استنشاق ألياف الأسبستوس</li>
+                            <li><strong>فحمياً الرئة (Coal workers' pneumoconiosis):</strong> نتيجة استنشاق غبار الفحم</li>
+                        </ul>
+                    </div>
+                    <div class="concept-example">عمال المناجم وقطع الأحجار وصناعة الزجاج والسيراميك</div>
+                    <div class="exam-angle">الأنواع المختلفة حسب المادة المستنشقة</div>
+                </div>
+
+                <div class="concept-item" id="concept-acute-inflammation">
+                    <div class="concept-title">الالتهاب الحاد (Acute Inflammation)</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الثالث</span>
+                        <span>📄 الصفحة: 9</span>
+                    </div>
+                    <div class="concept-def">
+                        يحدث بشكل رئيسي بسبب الغازات المهيجة للجهاز التنفسي العلوي. يمكن أن يؤدي إلى وذمة رئوية حادة بعد 48-72 ساعة من التعرض.
+                        <br><br>
+                        <strong>أمثلة الغازات:</strong>
+                        <ul>
+                            <li>أكسيد النيتروجين</li>
+                            <li>الفسفين</li>
+                            <li>أول أكسيد الكربون</li>
+                            <li>الأوزون</li>
+                        </ul>
+                    </div>
+                    <div class="exam-angle">سرعة ظهور الأعراض كمؤشر على الحدة</div>
+                </div>
+
+                <div class="concept-item" id="concept-asthma-causes">
+                    <div class="concept-title">مسبِّبات الربو المهني</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الثالث</span>
+                        <span>📄 الصفحة: 10</span>
+                    </div>
+                    <div class="concept-def">
+                        <ul>
+                            <li>دقائق الحبوب (القمح، الشعير، الشوفان)</li>
+                            <li>لحوم الطيور (الدجاج، الديك الرومي)</li>
+                            <li>البيض والحليب</li>
+                            <li>لحوم الأسماك والقشريات</li>
+                            <li>الإيثيلين دايامين</li>
+                            <li>الفورمالديهايد</li>
+                            <li>الطلاءات</li>
+                            <li>غبار القطن والكتان</li>
+                            <li>الترابين الموجودة في صناعة المطاط</li>
+                        </ul>
+                    </div>
+                    <div class="exam-angle">التعرف على المسببات حسب صناعة العمل</div>
+                </div>
+            </div>
+
+            <!-- Lesson 4: Body Systems Diseases -->
+            <div class="card">
+                <h2>الدرس الرابع: مخاطر بيئات العمل على أعضاء وأجهزة الجسم</h2>
+
+                <div class="concept-item" id="concept-nervous-system">
+                    <div class="concept-title">الأمراض المتعلقة بالجهاز العصبي</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الرابع</span>
+                        <span>📄 الصفحة: 12-14</span>
+                    </div>
+                    <div class="concept-def">
+                        <strong>المواد المؤثرة على الجهاز العصبي:</strong>
+                        <ul>
+                            <li>الزئبق (Mercury) ومركباته</li>
+                            <li>الرصاص (Lead) ومركباته</li>
+                            <li>المنغنيز (Manganese)</li>
+                            <li>ثنائي كبريتيد الكربون (Carbon disulfide)</li>
+                            <li>ن-هكسان (n-Hexane)</li>
+                            <li>الفوسفات العضوية (Organophosphates)</li>
+                            <li>التولوين (Toluene)</li>
+                        </ul>
+                        <br>
+                        <strong>التأثيرات:</strong>
+                        <ul>
+                            <li>تلف في النخاع الشوكي</li>
+                            <li>اعتلال الدماغ</li>
+                            <li>اضطرابات في الذاكرة والتركيز</li>
+                            <li>تشنجات عصبية</li>
+                        </ul>
+                    </div>
+                    <div class="exam-angle">العلاقة بين المادة الكيميائية والتأثير العصبي</div>
+                </div>
+
+                <div class="concept-item" id="concept-urinary-system">
+                    <div class="concept-title">الأمراض المتعلقة بالجهاز البولي</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الرابع</span>
+                        <span>📄 الصفحة: 14-15</span>
+                    </div>
+                    <div class="concept-def">
+                        عند استصاب الكلى بمادة كيميائية، يتغير تركيز البول ويزداد تركيز البروتينات والبولينوجين.
+                        <br><br>
+                        <strong>الأشكال الشائعة:</strong>
+                        <ul>
+                            <li>زيادة البولينوجين في البول</li>
+                            <li>زيادة البروتينات في البول</li>
+                            <li>سكر الدم</li>
+                            <li>فشل كلوي حاد</li>
+                            <li>انحلال الدم</li>
+                        </ul>
+                        <br>
+                        <strong>المواد المسببة:</strong>
+                            <li>الزئبق</li>
+                            <li>التوالين</li>
+                            <li>الكحوليات</li>
+                            <li>مذيبات الكلور</li>
+                    </div>
+                    <div class="exam-angle">تأثير المواد الكيميائية على وظائف الكلى</div>
+                </div>
+
+                <div class="concept-item" id="concept-heart-diseases">
+                    <div class="concept-title">الأمراض المتعلقة بالقلب والأوعية الدموية</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الرابع</span>
+                        <span>📄 الصفحة: 15-16</span>
+                    </div>
+                    <div class="concept-def">
+                        <strong>المواد المؤثرة:</strong>
+                        <ul>
+                            <li>أول أكسيد الكربون (CO): يرتبط بالهيموغلوبين ويقلل من نقل الأكسجين</li>
+                            <li>النترات والنيتريت</li>
+                            <li>الزرنيخ</li>
+                            <li>الرصاص</li>
+                            <li>الكادميوم</li>
+                        </ul>
+                        <br>
+                        <strong>التأثيرات:</strong>
+                        <ul>
+                            <li>ارتفاع ضغط الدم</li>
+                            <li>تصلب الشرايين</li>
+                            <li>الجلطات القلبية</li>
+                            <li>اضطراب النظم القلبي</li>
+                        </ul>
+                    </div>
+                    <div class="exam-angle">آلية تأثير أول أكسيد الكربون على نقل الأكسجين</div>
+                </div>
+
+                <div class="concept-item" id="concept-skin-diseases">
+                    <div class="concept-title">الأمراض المتعلقة بالجلد</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الرابع</span>
+                        <span>📄 الصفحة: 17-20</span>
+                    </div>
+                    <div class="concept-def">
+                        <strong>أنواع الأمراض الجلدية المهنية:</strong>
+                        <br><br>
+                        <strong>1. التهاب الجلد التماسي المهيج الأولي (Primary irritant contact dermatitis):</strong>
+                        <ul>
+                            <li>يشكل 70-80% من الأمراض الجلدية المهنية</li>
+                            <li>يحدث تأثير مباشر على الجلد</li>
+                            <li>يعتمد على مدة التعرض وشدته</li>
+                        </ul>
+                        <br>
+                        <strong>2. التهاب الجلد التماسي التحسسي (Allergic contact dermatitis):</strong>
+                        <ul>
+                            <li>يشكل 15-20% من الأمراض الجلدية المهنية</li>
+                            <li>يتطلب فترة تحسس أولية</li>
+                            <li>رد فعل مناعي</li>
+                        </ul>
+                    </div>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>النوع</th>
+                            <th>النسبة</th>
+                            <th>آلية التأثير</th>
+                        </tr>
+                        <tr>
+                            <td>المهيج الأولي</td>
+                            <td>70-80%</td>
+                            <td>تأثير مباشر</td>
+                        </tr>
+                        <tr>
+                            <td>التحسسي</td>
+                            <td>15-20%</td>
+                            <td>رد فعل مناعي</td>
+                        </tr>
+                    </table>
+                    <div class="exam-angle">التمييز بين النوعين المهيج والتحسسي</div>
+                </div>
+
+                <div class="concept-item" id="concept-liver-diseases">
+                    <div class="concept-title">الأمراض المتعلقة بالكبد</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الرابع</span>
+                        <span>📄 الصفحة: 20-21</span>
+                    </div>
+                    <div class="concept-def">
+                        الكبد هو أكبر عضو في الجسم ويلعب دوراً رئيسياً في إزالة السموم من الجسم.
+                        <br><br>
+                        <strong>المواد المسببة لأمراض الكبد:</strong>
+                        <ul>
+                            <li>أول أكسيد الكربون</li>
+                            <li>الزرنيخ</li>
+                            <li>الفوسفور</li>
+                            <li>الكلوروفورم</li>
+                            <li>التتراكلوروإيثيلين</li>
+                            <li>الكلوريدات</li>
+                        </ul>
+                    </div>
+                    <div class="exam-angle">وظيفة الكبد في إزالة السموم</div>
+                </div>
+
+                <div class="concept-item" id="concept-blood-diseases">
+                    <div class="concept-title">الأمراض المتعلقة بالدم</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الرابع</span>
+                        <span>📄 الصفحة: 22-23</span>
+                    </div>
+                    <div class="concept-def">
+                        <strong>المواد المؤثرة على الدم:</strong>
+                        <ul>
+                            <li>البنزين: يسبب فقر الدم الانحلالي (Aplastic anemia) وسرطان الدم (Leukemia)</li>
+                            <li>الزرنيخ</li>
+                            <li>الرصاص</li>
+                        </ul>
+                        <br>
+                        <strong>التأثيرات:</strong>
+                        <ul>
+                            <li>تلف النخاع العظمي</li>
+                            <li>انخفاض كرات الدم الحمراء</li>
+                            <li>انخفاض الصفائح الدموية</li>
+                            <li>سرطان الدم</li>
+                        </ul>
+                    </div>
+                    <div class="exam-angle">تأثير البنزين على النخاع العظمي</div>
+                </div>
+            </div>
+
+            <!-- Lesson 5: Chemical Substances -->
+            <div class="card">
+                <h2>الدرس الخامس: تقييم وقياس آثار المواد الكيميائية</h2>
+
+                <div class="concept-item" id="concept-chemical-entry">
+                    <div class="concept-title">طرق دخول وامتصاص المواد الكيميائية في الجسم</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الخامس</span>
+                        <span>📄 الصفحة: 25-26</span>
+                    </div>
+                    <div class="concept-def">
+                        <strong>1. الجهاز التنفسي:</strong>
+                        <ul>
+                            <li>الغازات والأبخرة</li>
+                            <li>الغبار والدقائق العالقة</li>
+                        </ul>
+                        <br>
+                        <strong>2. الجلد:</strong>
+                        <ul>
+                            <li>المواد الدهنية</li>
+                            <li>المذيبات العضوية</li>
+                        </ul>
+                        <br>
+                        <strong>3. الجهاز الهضمي:</strong>
+                        <ul>
+                            <li>ابتلاع المواد عن طريق الفم</li>
+                            <li>التلوث بالأغذية والماء</li>
+                        </ul>
+                    </div>
+                    <div class="exam-angle">تحديد طريق الدخول حسب طبيعة المادة</div>
+                </div>
+
+                <div class="concept-item" id="concept-exposure-limits">
+                    <div class="concept-title">حدود التعرض المهنية (Occupational Exposure Limits - OEL)</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الخامس</span>
+                        <span>📄 الصفحة: 28-29</span>
+                    </div>
+                    <div class="concept-def">
+                        <strong>أنواع حدود التعرض:</strong>
+                        <br><br>
+                        <strong>1. MAC-TWA (Time-Weighted Average):</strong>
+                        <ul>
+                            <li>متوسط التعرض الموزون زمنياً</li>
+                            <li>8 ساعات في اليوم، 40 ساعة في الأسبوع</li>
+                        </ul>
+                        <br>
+                        <strong>2. MAC-STEL (Short-Term Exposure Limit):</strong>
+                        <ul>
+                            <li>حد التعرض القصير المدى</li>
+                            <li>15 دقيقة كحد أقصى</li>
+                            <li>لا يتكرر أكثر من مرتين في اليوم</li>
+                        </ul>
+                        <br>
+                        <strong>3. MAC-C (Ceiling):</strong>
+                        <ul>
+                            <li>الحد الأقصى الفوري</li>
+                            <li>لا يجب تجاوزه في أي لحظة</li>
+                        </ul>
+                    </div>
+                    <div class="exam-angle">الفرق بين أنواع حدود التعرض وتطبيقاتها</div>
+                </div>
+
+                <div class="concept-item" id="concept-sds">
+                    <div class="concept-title">بطاقة بيانات السلامة (Safety Data Sheet - SDS)</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الخامس</span>
+                        <span>📄 الصفحة: 30</span>
+                    </div>
+                    <div class="concept-def">
+                        وثيقة تحتوي على معلومات أساسية عن المواد والمستحضرات الكيميائية تشمل:
+                        <ul>
+                            <li>معرفة المادة أو المستحضر</li>
+                            <li>تحديد المخاطر</li>
+                            <li>المعلومات البيولوجية</li>
+                            <li>الإجراءات الأولية</li>
+                            <li>مكافحة الحرائق</li>
+                            <li>الإسعافات الأولية</li>
+                            <li>اللوائح والتخزين</li>
+                            <li>الخصائص الفيزيائية والكيميائية</li>
+                        </ul>
+                    </div>
+                    <div class="exam-angle">أهمية SDS في بيئة العمل</div>
+                </div>
+
+                <div class="concept-item" id="concept-latency-period">
+                    <div class="concept-title">فترة الحضانة (Latency Period)</div>
+                    <div class="concept-meta">
+                        <span>📖 الدرس الخامس</span>
+                        <span>📄 الصفحة: 31</span>
+                    </div>
+                    <div class="concept-def">
+                        الفترة الزمنية بين أول تعرض للمادة الكيميائية وظهور الآثار السرطانية. قد تتراوح بين 4-40 عاماً حسب:
+                        <ul>
+                            <li>نوع المادة الكيميائية</li>
+                            <li>شدة التعرض</li>
+                            <li>مدة التعرض</li>
+                            <li>العوامل الفردية</li>
+                        </ul>
+                    </div>
+                    <div class="exam-angle">العلاقة بين فترة الحضانة والتشخيص</div>
+                </div>
+            </div>
+
+            <!-- Analytical Models -->
+            <div class="card">
+                <h2>النماذج التحليلية</h2>
+
+                <h3>مصفوفة تقييم المخاطر (Risk Matrix)</h3>
+                <div class="risk-matrix" role="table" aria-label="Risk Matrix">
+                    <div class="matrix-header" role="columnheader">التأثير →<br>الاحتمال ↓</div>
+                    <div class="matrix-header" role="columnheader">ضئيل</div>
+                    <div class="matrix-header" role="columnheader">متوسط</div>
+                    <div class="matrix-header" role="columnheader">كبير</div>
+                    <div class="matrix-header" role="columnheader">حرِج</div>
+
+                    <div class="matrix-header" role="rowheader">نادر</div>
+                    <div class="matrix-cell matrix-low">منخفض</div>
+                    <div class="matrix-cell matrix-low">منخفض</div>
+                    <div class="matrix-cell matrix-medium">متوسط</div>
+                    <div class="matrix-cell matrix-medium">متوسط</div>
+
+                    <div class="matrix-header" role="rowheader">محتمل</div>
+                    <div class="matrix-cell matrix-low">منخفض</div>
+                    <div class="matrix-cell matrix-medium">متوسط</div>
+                    <div class="matrix-cell matrix-medium">متوسط</div>
+                    <div class="matrix-cell matrix-high">عالي</div>
+
+                    <div class="matrix-header" role="rowheader">مرجّح</div>
+                    <div class="matrix-cell matrix-medium">متوسط</div>
+                    <div class="matrix-cell matrix-medium">متوسط</div>
+                    <div class="matrix-cell matrix-high">عالي</div>
+                    <div class="matrix-cell matrix-high">عالي</div>
+
+                    <div class="matrix-header" role="rowheader">شبه مؤكد</div>
+                    <div class="matrix-cell matrix-medium">متوسط</div>
+                    <div class="matrix-cell matrix-high">عالي</div>
+                    <div class="matrix-cell matrix-high">عالي</div>
+                    <div class="matrix-cell matrix-critical">حرِج</div>
+                </div>
+
+                <h3>تحليل SWOT للسلامة المهنية</h3>
+                <div class="swot-grid">
+                    <div class="swot-box swot-strengths">
+                        <h4>🟢 نقاط القوة (Strengths)</h4>
+                        <ul>
+                            <li>تشريعات وقوانين واضحة</li>
+                            <li>وعي متزايد لدى العمال</li>
+                            <li>تقنيات حماية متطورة</li>
+                            <li>برامج تدريبية منظمة</li>
+                        </ul>
+                    </div>
+                    <div class="swot-box swot-weaknesses">
+                        <h4>🔴 نقاط الضعف (Weaknesses)</h4>
+                        <ul>
+                            <li>نقص في التدريب العملي</li>
+                            <li>ضعف الرقابة في بعض القطاعات</li>
+                            <li>التكاليف المرتفعة للتجهيزات</li>
+                            <li>مقاومة التغيير لدى بعض العمال</li>
+                        </ul>
+                    </div>
+                    <div class="swot-box swot-opportunities">
+                        <h4>🔵 الفرص (Opportunities)</h4>
+                        <ul>
+                            <li>التطور التكنولوجي في مجال السلامة</li>
+                            <li>الشراكات الدولية</li>
+                            <li>الحوافز الحكومية</li>
+                            <li>برامج الاعتماد الدولية</li>
+                        </ul>
+                    </div>
+                    <div class="swot-box swot-threats">
+                        <h4>🟡 التهديدات (Threats)</h4>
+                        <ul>
+                            <li>المخاطر الكيميائية المتزايدة</li>
+                            <li>الصناعات الخطرة الجديدة</li>
+                            <li>الضغوط الاقتصادية</li>
+                            <li>نقص الكوادر المؤهلة</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Glossary -->
+            <div class="card">
+                <h2>قاموس المصطلحات</h2>
+                <div class="glossary-term">
+                    <strong>السلامة المهنية (Occupational Safety)</strong>
+                    <span>حماية العمال من الإصابات والحوادث</span>
+                </div>
+                <div class="glossary-term">
+                    <strong>الصحة المهنية (Occupational Health)</strong>
+                    <span>حماية العمال من الأمراض المهنية</span>
+                </div>
+                <div class="glossary-term">
+                    <strong>الحادث المهني (Occupational Accident)</strong>
+                    <span>حدث مفاجئ يؤدي لإصابة العامل</span>
+                </div>
+                <div class="glossary-term">
+                    <strong>المرض المهني (Occupational Disease)</strong>
+                    <span>مرض ناتج عن التعرض لعوامل مهنية</span>
+                </div>
+                <div class="glossary-term">
+                    <strong>حد التعرض (Exposure Limit)</strong>
+                    <span>الحد الأقصى المسموح به للتعرض</span>
+                </div>
+                <div class="glossary-term">
+                    <strong>فترة الحضانة (Latency Period)</strong>
+                    <span>الفترة بين التعرض وظهور المرض</span>
+                </div>
+                <div class="glossary-term">
+                    <strong>SDS (Safety Data Sheet)</strong>
+                    <span>بطاقة بيانات السلامة</span>
+                </div>
+                <div class="glossary-term">
+                    <strong>الربو المهني (Occupational Asthma)</strong>
+                    <span>ربو ناتج عن التعرض لمواد مهنية</span>
+                </div>
+                <div class="glossary-term">
+                    <strong>تلبُّد الرئة (Pneumoconiosis)</strong>
+                    <span>أمراض الرئة من استنشاق الغبار</span>
+                </div>
+                <div class="glossary-term">
+                    <strong>التهاب الجلد التماسي (Contact Dermatitis)</strong>
+                    <span>تهيج الجلد من التلامس مع مواد</span>
+                </div>
+            </div>
+
+            <!-- Infographic Slot -->
+            <div class="card">
+                <h2>ملف الإنفوجرافيك</h2>
+                <div class="infographic-slot">
+                    <div style="padding: 40px; color: var(--text-muted); text-align:center;">
+                        <p style="font-size: 48px; margin-bottom: 16px;">📊</p>
+                        <p>ضع الملف داخل نفس المجلد باسم <strong>unit_infographic.png</strong></p>
+                    </div>
+                </div>
+                <p style="margin:10px 0 0;color:#64748b;font-size:.9rem">
+                    ضع الملف داخل نفس المجلد باسم <strong>unit_infographic.png</strong>.
+                </p>
+            </div>
+        </section>
+
+        <!-- Exam Tab -->
+        <section id="exam" class="tab-content">
+            <div id="examWelcome">
+                <div class="welcome-section">
+                    <h2>📝 اختبار السلامة والصحة المهنية</h2>
+                    <p>اختبر معرفتك في السلامة والصحة المهنية من خلال نماذج امتحانية متنوعة</p>
+
+                    <div class="course-info">
+                        <div class="course-info-item">
+                            <span>⏱️</span>
+                            <span>مدة الاختبار: 60 دقيقة</span>
+                        </div>
+                        <div class="course-info-item">
+                            <span>✅</span>
+                            <span>درجة النجاح: 70%</span>
+                        </div>
+                        <div class="course-info-item">
+                            <span>📝</span>
+                            <span>عدد الأسئلة: 30 سؤال</span>
+                        </div>
+                    </div>
+
+                    <div class="name-input-container">
+                        <input type="text" id="studentName" placeholder="أدخل اسمك الكريم" maxlength="50">
+                    </div>
+
+                    <h3 style="margin: 32px 0 16px; color: var(--primary);">اختر نموذج الاختبار</h3>
+                    <div class="model-grid">
+                        <div class="model-card" data-model="A">
+                            <span class="model-badge model-a">النموذج أ</span>
+                            <h3>الأساسي</h3>
+                            <p>أسئلة متوازنة تغطي جميع المفاهيم الأساسية</p>
+                            <div class="model-stats">
+                                <span class="model-stat">📚 30 سؤال</span>
+                                <span class="model-stat">⏱️ 60 دقيقة</span>
+                            </div>
+                        </div>
+                        <div class="model-card" data-model="B">
+                            <span class="model-badge model-b">النموذج ب</span>
+                            <h3>التطبيقي</h3>
+                            <p>يركز على التطبيق العملي والسيناريوهات</p>
+                            <div class="model-stats">
+                                <span class="model-stat">📚 30 سؤال</span>
+                                <span class="model-stat">⏱️ 60 دقيقة</span>
+                            </div>
+                        </div>
+                        <div class="model-card" data-model="C">
+                            <span class="model-badge model-c">النموذج ج</span>
+                            <h3>التحليلي</h3>
+                            <p>أسئلة تحليلية عالية المستوى</p>
+                            <div class="model-stats">
+                                <span class="model-stat">📚 30 سؤال</span>
+                                <span class="model-stat">⏱️ 60 دقيقة</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-group" style="justify-content: center;">
+                        <button class="btn btn-primary" id="startExamBtn" disabled>ابدأ الاختبار</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="examContainer" class="hidden">
+                <div class="exam-header">
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="questionCounter">السؤال 1 من 30</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="btn-group">
+                    <button class="btn btn-outline" id="prevQuestionBtn" disabled>السؤال السابق</button>
+                    <button class="btn btn-primary" id="nextQuestionBtn">السؤال التالي</button>
+                    <button class="btn btn-success hidden" id="submitExamBtn">إنهاء الاختبار</button>
+                </div>
+            </div>
+
+            <div id="examResults" class="hidden">
+                <div class="card">
+                    <div class="results-summary">
+                        <div class="score-circle" id="scoreCircle">
+                            <div class="score-value" id="scoreValue">0%</div>
+                            <div class="score-label">النتيجة</div>
+                        </div>
+                        <div class="result-message" id="resultMessage"></div>
+                        <p id="resultDetails"></p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="correctCount">0</div>
+                            <div class="stat-label">الإجابات الصحيحة</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="wrongCount">0</div>
+                            <div class="stat-label">الإجابات الخاطئة</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="timeTaken">0:00</div>
+                            <div class="stat-label">الوقت المستغرق</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="avgTime">0:00</div>
+                            <div class="stat-label">متوسط الوقت/سؤال</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>تحليل المفاهيم</h2>
+                    <div id="conceptAnalysis"></div>
+                </div>
+
+                <div class="btn-group" style="justify-content: center;">
+                    <button class="btn btn-primary" id="retakeExamBtn">إعادة الاختبار</button>
+                    <button class="btn btn-success" id="weaknessRetestBtn">اختبار النقاط الضعيفة</button>
+                    <button class="btn btn-outline" onclick="switchTab('study')">العودة للدراسة</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Flashcards Tab -->
+        <section id="flashcards" class="tab-content">
+            <div class="welcome-section">
+                <h2>🎯 بطاقات المراجعة</h2>
+                <p>اضغط على البطاقة لقلبها ومعرفة التعريف</p>
+            </div>
+
+            <div class="flashcard-container">
+                <div class="flashcard" id="flashcard">
+                    <div class="flashcard-face flashcard-front">
+                        <div class="flashcard-term" id="flashcardTerm"></div>
+                        <div class="flashcard-hint">اضغط لقلب البطاقة</div>
+                    </div>
+                    <div class="flashcard-back">
+                        <div class="flashcard-definition" id="flashcardDefinition"></div>
+                        <div class="flashcard-exam-tip" id="flashcardExamTip"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flashcard-counter" id="flashcardCounter">1 / 15</div>
+
+            <div class="flashcard-nav">
+                <button class="btn btn-outline" id="prevFlashcardBtn">السابق</button>
+                <button class="btn btn-primary" id="flipFlashcardBtn">قلب البطاقة</button>
+                <button class="btn btn-outline" id="nextFlashcardBtn">التالي</button>
+            </div>
+        </section>
+
+        <!-- Dashboard Tab -->
+        <section id="dashboard" class="tab-content">
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>📊 إحصائياتك</h3>
+                    <div class="stats-grid" style="margin: 0;">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalAttempts">0</div>
+                            <div class="stat-label">عدد المحاولات</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="bestScore">0%</div>
+                            <div class="stat-label">أفضل نتيجة</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="avgScore">0%</div>
+                            <div class="stat-label">متوسط النتيجة</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>📜 سجل المحاولات</h3>
+                    <div id="attemptsHistory"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>مستوى إتقان المفاهيم</h2>
+                <div id="masteryDashboard"></div>
+            </div>
+
+            <div class="btn-group" style="justify-content: center;">
+                <button class="btn btn-danger" id="clearDataBtn">مسح جميع البيانات</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+
+        // Course Data
+        const courseData = {
+            title: 'السلامة والصحة المهنية',
+            code: '121',
+            passingScore: 70,
+            duration: 60, // minutes
+            concepts: [
+                { id: 'c1', name: 'تاريخ السلامة والصحة المهنية', anchor: 'concept-history-intro' },
+                { id: 'c2', name: 'الحادث المهني', anchor: 'concept-accident-definition' },
+                { id: 'c3', name: 'إحصائيات الحوادث', anchor: 'concept-accident-stats' },
+                { id: 'c4', name: 'معايير تشخيص المرض المهني', anchor: 'concept-disease-criteria' },
+                { id: 'c5', name: 'الربو المهني', anchor: 'concept-asthma' },
+                { id: 'c6', name: 'تلبُّد الرئة', anchor: 'concept-pneumoconiosis' },
+                { id: 'c7', name: 'الالتهاب الحاد', anchor: 'concept-acute-inflammation' },
+                { id: 'c8', name: 'الأمراض العصبية', anchor: 'concept-nervous-system' },
+                { id: 'c9', name: 'الأمراض البولية', anchor: 'concept-urinary-system' },
+                { id: 'c10', name: 'أمراض القلب', anchor: 'concept-heart-diseases' },
+                { id: 'c11', name: 'الأمراض الجلدية', anchor: 'concept-skin-diseases' },
+                { id: 'c12', name: 'أمراض الكبد', anchor: 'concept-liver-diseases' },
+                { id: 'c13', name: 'أمراض الدم', anchor: 'concept-blood-diseases' },
+                { id: 'c14', name: 'طرق دخول المواد الكيميائية', anchor: 'concept-chemical-entry' },
+                { id: 'c15', name: 'حدود التعرض', anchor: 'concept-exposure-limits' }
+            ]
+        };
+
+        // Question Bank - Model A (Basic)
+        const questionsModelA = [
+            // History
+            {
+                id: 'a1',
+                conceptId: 'c1',
+                question: 'من هو العالم الذي كتب كتاب "De Morbis Artificium" عن أمراض الحرفيين؟',
+                options: ['باراسيلسوس', 'رامازيني', 'هيبوقراط', 'غالينوس'],
+                correctIndex: 1,
+                bloomLevel: 'recall',
+                explanationCorrect: 'رامازيني (1633-1714) هو أول من كتب عن الأمراض المهنية في كتابه الشهير "De Morbis Artificium".',
+                explanationWrong: [
+                    'باراسيلسوس كتب في الفترة 1493-1541 لكنه لم يؤلف هذا الكتاب المحدد.',
+                    'صحيح! رامازيني هو مؤلف الكتاب.',
+                    'هيبوقراط هو أبو الطب لكنه لم يتخصص في الأمراض المهنية.',
+                    'غالينوس طبيب روماني مشهور لكنه لم يؤلف هذا الكتاب.'
+                ]
+            },
+            {
+                id: 'a2',
+                conceptId: 'c1',
+                question: 'في أي عام تم إنشاء قانون المفتشين في بريطانيا؟',
+                options: ['1833', '1835', '1836', '1840'],
+                correctIndex: 0,
+                bloomLevel: 'recall',
+                explanationCorrect: 'تم إنشاء قانون المفتشين في بريطانيا عام 1833م.',
+                explanationWrong: [
+                    'صحيح! عام 1833م هو العام الصحيح.',
+                    '1835م هو عام أول قانون لعمل الأطفال في أمريكا.',
+                    '1836م هو عام ظهور شهادات الميلاد.',
+                    '1840م ليس العام الصحيح.'
+                ]
+            },
+            // Accidents
+            {
+                id: 'a3',
+                conceptId: 'c2',
+                question: 'ما هو تعريف الحادث المهني؟',
+                options: [
+                    'أي حادث يحدث للعامل في أي مكان',
+                    'حدث مفاجئ يقع للعامل أثناء تأدية عمله أو بسببه',
+                    'إصابة تحدث فقط داخل موقع العمل',
+                    'حادث يحدث أثناء الذهاب أو العودة من العمل'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'understand',
+                explanationCorrect: 'الحادث المهني هو حدث مفاجئ يقع للعامل أثناء تأدية عمله أو بسببه.',
+                explanationWrong: [
+                    'يجب أن يكون الحادث مرتبطاً بالعمل وليس في أي مكان.',
+                    'صحيح! هذا هو التعريف الدقيق للحادث المهني.',
+                    'الحادث المهني قد يحدث خارج موقع العمل إذا كان مرتبطاً بالعمل.',
+                    'الذهاب والعودة لها أحكام خاصة وليست دائماً حوادث مهنية.'
+                ]
+            },
+            {
+                id: 'a4',
+                conceptId: 'c3',
+                question: 'كم عدد الإصابات المسجلة في السعودية عام 2023م؟',
+                options: ['15352', '7413', '27133', '25000'],
+                correctIndex: 2,
+                bloomLevel: 'recall',
+                explanationCorrect: 'تم تسجيل 27133 إصابة مهنية في السعودية عام 2023م.',
+                explanationWrong: [
+                    '15352 هو عدد إصابات الوقوع فقط.',
+                    '7413 هو عدد إصابات التعرض للقوى فقط.',
+                    'صحيح! 27133 هو العدد الإجمالي للإصابات.',
+                    '25000 ليس الرقم الصحيح.'
+                ]
+            },
+            // Disease Criteria
+            {
+                id: 'a5',
+                conceptId: 'c4',
+                question: 'ما هي المعايير الثلاثة لتشخيص المرض المهني؟',
+                options: [
+                    'الألم، الحمى، الاحمرار',
+                    'التعرض، الآثار المعروفة، الفترة الزمنية',
+                    'السعال، ضيق التنفس، الصداع',
+                    'الدم، البول، الأشعة'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'understand',
+                explanationCorrect: 'معايير تشخيص المرض المهني هي: وجود دليل على التعرض، تطابق الآثار المعروفة، وفترة زمنية منطقية.',
+                explanationWrong: [
+                    'هذه أعراض عامة وليست معايير تشخيص.',
+                    'صحيح! هذه هي المعايير الثلاثة الأساسية.',
+                    'هذه أعراض مرضية وليست معايير تشخيص المرض المهني.',
+                    'هذه فحوصات طبية وليست معايير تشخيص.'
+                ]
+            },
+            // Respiratory
+            {
+                id: 'a6',
+                conceptId: 'c5',
+                question: 'ما هي فترة الحضانة للربو المهني؟',
+                options: ['1-2 ساعة', '4-8 ساعات', '24-48 ساعة', 'فورية'],
+                correctIndex: 1,
+                bloomLevel: 'recall',
+                explanationCorrect: 'فترة الحضانة للربو المهني تتراوح بين 4-8 ساعات من التعرض.',
+                explanationWrong: [
+                    '1-2 ساعة قصيرة جداً لفترة الحضانة.',
+                    'صحيح! 4-8 ساعات هي الفترة الصحيحة.',
+                    '24-48 ساعة طويلة جداً للربو المهني.',
+                    'الربو المهني ليس فوري التأثير.'
+                ]
+            },
+            {
+                id: 'a7',
+                conceptId: 'c6',
+                question: 'أي من التالي يسبب السيليكوزيس؟',
+                options: ['غبار الفحم', 'غبار السيليكا', 'ألياف الأسبستوس', 'أول أكسيد الكربون'],
+                correctIndex: 1,
+                bloomLevel: 'understand',
+                explanationCorrect: 'السيليكوزيس يسببه استنشاق غبار السيليكا (ثاني أكسيد السيليكون).',
+                explanationWrong: [
+                    'غبار الفحم يسبب فحمياً الرئة.',
+                    'صحيح! السيليكا تسبب السيليكوزيس.',
+                    'الأسبستوس يسبب الأسبستوزيس.',
+                    'أول أكسيد الكربون يسبب تسمم الدم.'
+                ]
+            },
+            {
+                id: 'a8',
+                conceptId: 'c7',
+                question: 'متى تظهر الوذمة الرئوية الحادة بعد التعرض للغازات المهيجة؟',
+                options: ['فوراً', 'بعد 4-8 ساعات', 'بعد 48-72 ساعة', 'بعد أسبوع'],
+                correctIndex: 2,
+                bloomLevel: 'recall',
+                explanationCorrect: 'تظهر الوذمة الرئوية الحادة بعد 48-72 ساعة من التعرض للغازات المهيجة.',
+                explanationWrong: [
+                    'الوذمة الرئوية ليست فورية.',
+                    '4-8 ساعات هي فترة حضانة الربو.',
+                    'صحيح! 48-72 ساعة هي الفترة الصحيحة.',
+                    'أسبوع طويل جداً لظهور الوذمة الرئوية الحادة.'
+                ]
+            },
+            // Nervous System
+            {
+                id: 'a9',
+                conceptId: 'c8',
+                question: 'أي من المواد التالية يُعرف بأنه يسبب اعتلال الدماغ (Encephalopathy) نتيجة التعرض المهني المزمن؟',
+                options: ['الزئبق العضوي', 'حمض الهيدروكلوريك', 'ثاني أكسيد الكربون', 'أكسيد الكالسيوم'],
+                correctIndex: 0,
+                bloomLevel: 'understand',
+                explanationCorrect: 'الزئبق العضوي يخترق الحاجز الدموي الدماغي ويسبب اعتلال الدماغ المهني.',
+                explanationWrong: [
+                    'صحيح! الزئبق العضوي يسبب اعتلال الدماغ.',
+                    'حمض الهيدروكلوريك يؤثر على الجهاز التنفسي لا الدماغ.',
+                    'ثاني أكسيد الكربون لا يسبب اعتلال الدماغ المزمن.',
+                    'أكسيد الكالسيوم مهيج للجهاز التنفسي وليس للدماغ.'
+                ]
+            },
+            // Urinary
+            {
+                id: 'a10',
+                conceptId: 'c9',
+                question: 'ما هو التأثير الرئيسي للزئبق غير العضوي على الجهاز البولي عند التعرض المهني؟',
+                options: ['فشل كلوي حاد بسبب تلف الأنابيب الكلوية', 'زيادة إنتاج البول فقط', 'انخفاض ضغط الدم الكلوي', 'التهاب الحالب'],
+                correctIndex: 0,
+                bloomLevel: 'understand',
+                explanationCorrect: 'الزئبق غير العضوي يتراكم في الأنابيب الكلوية ويسبب فشلاً كلوياً حاداً.',
+                explanationWrong: [
+                    'صحيح! الزئبق يتلف الأنابيب الكلوية مسبباً فشلاً حاداً.',
+                    'زيادة البول وحدها ليست التأثير الرئيسي للزئبق.',
+                    'انخفاض ضغط الدم الكلوي ليس التأثير المعروف للزئبق.',
+                    'التهاب الحالب ليس من تأثيرات التسمم بالزئبق.'
+                ]
+            },
+            // Heart
+            {
+                id: 'a11',
+                conceptId: 'c10',
+                question: 'كيف يؤثر أول أكسيد الكربون على الجسم؟',
+                options: ['يؤثر على الكبد', 'يرتبط بالهيموغلوبين ويقلل نقل الأكسجين', 'يسبب تلف العظام', 'يؤثر على الجهاز الهضمي'],
+                correctIndex: 1,
+                bloomLevel: 'understand',
+                explanationCorrect: 'أول أكسيد الكربون يرتبط بالهيموغلوبين بقوة أكبر من الأكسجين مما يقلل من نقل الأكسجين للأنسجة.',
+                explanationWrong: [
+                    'أول أكسيد الكربون لا يؤثر بشكل رئيسي على الكبد.',
+                    'صحيح! هذا هو التأثير الرئيسي لأول أكسيد الكربون.',
+                    'أول أكسيد الكربون لا يؤثر على العظام.',
+                    'التأثير على الجهاز الهضمي ليس رئيسياً.'
+                ]
+            },
+            // Skin
+            {
+                id: 'a12',
+                conceptId: 'c11',
+                question: 'ما هي نسبة التهاب الجلد التماسي المهيج الأولي من الأمراض الجلدية المهنية؟',
+                options: ['15-20%', '30-40%', '70-80%', '90-95%'],
+                correctIndex: 2,
+                bloomLevel: 'recall',
+                explanationCorrect: 'التهاب الجلد التماسي المهيج الأولي يشكل 70-80% من الأمراض الجلدية المهنية.',
+                explanationWrong: [
+                    '15-20% هي نسبة النوع التحسسي.',
+                    '30-40% ليست النسبة الصحيحة.',
+                    'صحيح! 70-80% هي النسبة الصحيحة.',
+                    '90-95% مبالغ فيها.'
+                ]
+            },
+            {
+                id: 'a13',
+                conceptId: 'c11',
+                question: 'ما هو الفرق بين التهاب الجلد المهيج والتحسسي؟',
+                options: [
+                    'لا يوجد فرق',
+                    'المهيج يحتاج فترة تحسس أولية بينما التحسسي فوري',
+                    'المهيج فوري بينما التحسسي يحتاج فترة تحسس',
+                    'كلاهما يحتاج فترة تحسس'
+                ],
+                correctIndex: 2,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'التهاب الجلد المهيج الأولي فوري التأثير، بينما التحسسي يحتاج لفترة تحسس أولية.',
+                explanationWrong: [
+                    'هناك فرق جوهري بين النوعين.',
+                    'هذا عكس الصحيح.',
+                    'صحيح! المهيج فوري والتحسسي يحتاج فترة تحسس.',
+                    'المهيج لا يحتاج فترة تحسس.'
+                ]
+            },
+            // Liver
+            {
+                id: 'a14',
+                conceptId: 'c12',
+                question: 'ما هي وظيفة الكبد الرئيسية فيما يتعلق بالمواد الكيميائية؟',
+                options: ['إنتاج الدم', 'إزالة السموم', 'نقل الأكسجين', 'إفراز الهرمونات'],
+                correctIndex: 1,
+                bloomLevel: 'understand',
+                explanationCorrect: 'الكبد يلعب دوراً رئيسياً في إزالة السموم من الجسم.',
+                explanationWrong: [
+                    'إنتاج الدم ليس وظيفة الكبد الرئيسية.',
+                    'صحيح! إزالة السموم هي الوظيفة الرئيسية.',
+                    'نقل الأكسجين وظيفة الدم.',
+                    'إفراز الهرمونات وظيفة الغدد الصماء.'
+                ]
+            },
+            // Blood
+            {
+                id: 'a15',
+                conceptId: 'c13',
+                question: 'ما هو تأثير البنزين على الدم؟',
+                options: [
+                    'زيادة كرات الدم الحمراء',
+                    'فقر الدم الانحلالي وسرطان الدم',
+                    'زيادة الصفائح الدموية',
+                    'تحسين تخثر الدم'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'understand',
+                explanationCorrect: 'البنزين يسبب فقر الدم الانحلالي (Aplastic anemia) وسرطان الدم (Leukemia).',
+                explanationWrong: [
+                    'البنزين يقلل كرات الدم الحمراء.',
+                    'صحيح! البنزين يسبب هذين المرضين الخطيرين.',
+                    'البنزين يقلل الصفائح الدموية.',
+                    'البنزين لا يحسن تخثر الدم.'
+                ]
+            },
+            // Chemical Entry
+            {
+                id: 'a16',
+                conceptId: 'c14',
+                question: 'ما هي طرق دخول المواد الكيميائية للجسم؟',
+                options: [
+                    'الجهاز التنفسي فقط',
+                    'الجلد فقط',
+                    'الجهاز التنفسي والجلد والجهاز الهضمي',
+                    'الحقن فقط'
+                ],
+                correctIndex: 2,
+                bloomLevel: 'understand',
+                explanationCorrect: 'المواد الكيميائية تدخل الجسم عبر الجهاز التنفسي والجلد والجهاز الهضمي.',
+                explanationWrong: [
+                    'ليس التنفسي فقط.',
+                    'ليس الجلد فقط.',
+                    'صحيح! هذه هي الطرق الثلاث الرئيسية.',
+                    'الحقن ليس الطريق الرئيسي في بيئة العمل.'
+                ]
+            },
+            // Exposure Limits
+            {
+                id: 'a17',
+                conceptId: 'c15',
+                question: 'ما هو MAC-TWA؟',
+                options: [
+                    'الحد الأقصى الفوري',
+                    'متوسط التعرض الموزون زمنياً لـ 8 ساعات',
+                    'حد التعرض القصير المدى',
+                    'حد التعرض اليومي'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'recall',
+                explanationCorrect: 'MAC-TWA هو متوسط التعرض الموزون زمنياً لـ 8 ساعات في اليوم و40 ساعة في الأسبوع.',
+                explanationWrong: [
+                    'الحد الأقصى الفوري هو MAC-C.',
+                    'صحيح! هذا هو تعريف MAC-TWA.',
+                    'حد التعرض القصير هو MAC-STEL.',
+                    'MAC-TWA أكثر تحديداً من مجرد اليومي.'
+                ]
+            },
+            {
+                id: 'a18',
+                conceptId: 'c15',
+                question: 'ما هو الحد الزمني لـ MAC-STEL؟',
+                options: ['5 دقائق', '15 دقيقة', '30 دقيقة', '60 دقيقة'],
+                correctIndex: 1,
+                bloomLevel: 'recall',
+                explanationCorrect: 'MAC-STEL هو حد التعرض القصير المدى لـ 15 دقيقة كحد أقصى.',
+                explanationWrong: [
+                    '5 دقائق قصيرة جداً.',
+                    'صحيح! 15 دقيقة هو الحد الزمني.',
+                    '30 دقيقة أطول من المحدد.',
+                    '60 دقيقة طويلة جداً.'
+                ]
+            },
+            // Additional Questions
+            {
+                id: 'a19',
+                conceptId: 'c1',
+                question: 'من أول من كتب عن الأمراض المهنية في العصر الوسيط؟',
+                options: ['هيبوقراط', 'باراسيلسوس', 'ابن سينا', 'الرازي'],
+                correctIndex: 1,
+                bloomLevel: 'recall',
+                explanationCorrect: 'باراسيلسوس (1493-1541) كتب عن الأمراض المهنية في العصر الوسيط.',
+                explanationWrong: [
+                    'هيبوقراط أقدم من ذلك بكثير.',
+                    'صحيح! باراسيلسوس هو أول من كتب في هذا المجال.',
+                    'ابن سينا جاء في فترة لاحقة.',
+                    'الرازي له إسهامات لكنه ليس الأول.'
+                ]
+            },
+            {
+                id: 'a20',
+                conceptId: 'c2',
+                question: 'أي من التالي يعتبر حادثاً مهنياً؟',
+                options: [
+                    'سقوط عامل في المنزل',
+                    'إصابة عامل أثناء تأدية عمله',
+                    'حادث سيارة أثناء الإجازة',
+                    'مرض عادي غير مرتبط بالعمل'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'apply',
+                explanationCorrect: 'الحادث المهني يجب أن يكون مرتبطاً بتأدية العمل أو بسببه.',
+                explanationWrong: [
+                    'المنزل ليس مكان عمل.',
+                    'صحيح! هذا هو تعريف الحادث المهني.',
+                    'الإجازة ليست وقت عمل.',
+                    'المرض العادي غير مرتبط بالعمل.'
+                ]
+            },
+            {
+                id: 'a21',
+                conceptId: 'c5',
+                question: 'ما هي نسبة حالات الربو المهني من جميع حالات الربو؟',
+                options: ['5-10%', '10-25%', '30-40%', '50-60%'],
+                correctIndex: 1,
+                bloomLevel: 'recall',
+                explanationCorrect: 'الربو المهني يمثل 10-25% من جميع حالات الربو.',
+                explanationWrong: [
+                    '5-10% أقل من الواقع.',
+                    'صحيح! 10-25% هي النسبة الصحيحة.',
+                    '30-40% أعلى من الواقع.',
+                    '50-60% مبالغ فيها جداً.'
+                ]
+            },
+            {
+                id: 'a22',
+                conceptId: 'c6',
+                question: 'أي من الصناعات التالية يعرض للسيليكوزيس؟',
+                options: [
+                    'صناعة الأثاث',
+                    'صناعة الزجاج والسيراميك',
+                    'صناعة الملابس',
+                    'صناعة الأغذية'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'apply',
+                explanationCorrect: 'صناعة الزجاج والسيراميك تعرض العمال لغبار السيليكا مما يسبب السيليكوزيس.',
+                explanationWrong: [
+                    'صناعة الأثاث تعرض لغبار الخشب.',
+                    'صحيح! الزجاج والسيراميك يحتويان على السيليكا.',
+                    'صناعة الملابس لا تعرض للسيليكا.',
+                    'صناعة الأغذية لها مخاطر مختلفة.'
+                ]
+            },
+            {
+                id: 'a23',
+                conceptId: 'c8',
+                question: 'ما هو تأثير n-Hexane على الجهاز العصبي؟',
+                options: [
+                    'تلف محيطي في الأعصاب',
+                    'تلف في الكبد',
+                    'تأثير على القلب',
+                    'تأثير على الجلد'
+                ],
+                correctIndex: 0,
+                bloomLevel: 'understand',
+                explanationCorrect: 'n-Hexane يسبب تلفاً محيطياً في الأعصاب (Peripheral neuropathy).',
+                explanationWrong: [
+                    'صحيح! n-Hexane يؤثر على الأعصاب المحيطية.',
+                    'التأثير على الكبد ليس رئيسياً.',
+                    'التأثير على القلب ليس رئيسياً.',
+                    'التأثير على الجلد ليس رئيسياً.'
+                ]
+            },
+            {
+                id: 'a24',
+                conceptId: 'c10',
+                question: 'ما هو تأثير النترات على القلب؟',
+                options: [
+                    'زيادة ضربات القلب',
+                    'انخفاض ضغط الدم',
+                    'تصلب الشرايين',
+                    'توسع الأوعية الدموية'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'understand',
+                explanationCorrect: 'النترات تسبب انخفاضاً في ضغط الدم كأحد آثارها الجانبية.',
+                explanationWrong: [
+                    'التأثير ليس زيادة في الضربات.',
+                    'صحيح! انخفاض ضغط الدم هو التأثير.',
+                    'التصلب ليس تأثيراً مباشراً.',
+                    'التوسع ليس التأثير الرئيسي المقصود.'
+                ]
+            },
+            {
+                id: 'a25',
+                conceptId: 'c11',
+                question: 'أي من المواد التالية تسبب التهاب الجلد التحسسي؟',
+                options: ['الماء', 'الإيبوكسي', 'الهواء', 'التراب العادي'],
+                correctIndex: 1,
+                bloomLevel: 'apply',
+                explanationCorrect: 'الإيبوكسي من المواد الشائعة المسببة للتهاب الجلد التحسسي.',
+                explanationWrong: [
+                    'الماء لا يسبب التهاباً تحسسياً.',
+                    'صحيح! الإيبوكسي مادة حساسة شائعة.',
+                    'الهواء لا يسبب التهاباً تحسسياً.',
+                    'التراب العادي يسبب التهاباً مهيجاً.'
+                ]
+            },
+            {
+                id: 'a26',
+                conceptId: 'c12',
+                question: 'أي من المواد التالية يسبب تلف الكبد؟',
+                options: ['التتراكلوروإيثيلين', 'الماء', 'الأكسجين', 'النيتروجين'],
+                correctIndex: 0,
+                bloomLevel: 'understand',
+                explanationCorrect: 'التتراكلوروإيثيلين من المذيبات التي تسبب تلف الكبد.',
+                explanationWrong: [
+                    'صحيح! التتراكلوروإيثيلين سام للكبد.',
+                    'الماء لا يسبب تلف الكبد.',
+                    'الأكسجين ضروري للحياة.',
+                    'النيتروجين غاز خامل.'
+                ]
+            },
+            {
+                id: 'a27',
+                conceptId: 'c13',
+                question: 'ما هو aplastic anemia؟',
+                options: [
+                    'زيادة كرات الدم الحمراء',
+                    'فقر الدم الانحلالي',
+                    'زيادة الصفائح الدموية',
+                    'تسمم الدم'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'recall',
+                explanationCorrect: 'Aplastic anemia هو فقر الدم الانحلالي الناجم عن تلف النخاع العظمي.',
+                explanationWrong: [
+                    'هو نقص وليس زيادة.',
+                    'صحيح! هذا هو التعريف الصحيح.',
+                    'هو نقص في الصفائح.',
+                    'ليست تسمماً بالمعنى الدقيق.'
+                ]
+            },
+            {
+                id: 'a28',
+                conceptId: 'c14',
+                question: 'أي من المواد تدخل الجسم بسهولة عبر الجلد؟',
+                options: ['الماء', 'المذيبات العضوية', 'الأملاح', 'السكريات'],
+                correctIndex: 1,
+                bloomLevel: 'understand',
+                explanationCorrect: 'المذيبات العضوية الدهنية تدخل الجسم بسهولة عبر الجلد.',
+                explanationWrong: [
+                    'الماء لا يمتص بسهولة عبر الجلد.',
+                    'صحيح! المذيبات العضوية تخترق الجلد.',
+                    'الأملاح لا تمتص بسهولة.',
+                    'السكريات لا تمتص عبر الجلد.'
+                ]
+            },
+            {
+                id: 'a29',
+                conceptId: 'c15',
+                question: 'ما هو الهدف من تحديد حدود التعرض المهنية؟',
+                options: [
+                    'زيادة الإنتاج',
+                    'حماية صحة العمال',
+                    'تقليل التكاليف',
+                    'زيادة الأرباح'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'understand',
+                explanationCorrect: 'هدف حدود التعرض المهنية هو حماية صحة العمال من الآثار الضارة.',
+                explanationWrong: [
+                    'الإنتاج ليس الهدف المباشر.',
+                    'صحيح! حماية الصحة هو الهدف الرئيسي.',
+                    'التكاليف ليست الاعتبار الرئيسي.',
+                    'الأرباح ليست الهدف.'
+                ]
+            },
+            {
+                id: 'a30',
+                conceptId: 'c4',
+                question: 'ما هي فترة الحضانة (Latency Period) للمواد المسرطنة؟',
+                options: ['شهر واحد', '6 أشهر', '4-40 سنة', 'يوم واحد'],
+                correctIndex: 2,
+                bloomLevel: 'recall',
+                explanationCorrect: 'فترة الحضانة للمواد المسرطنة قد تتراوح بين 4-40 سنة.',
+                explanationWrong: [
+                    'شهر واحد قصير جداً.',
+                    '6 أشهر قصيرة جداً.',
+                    'صحيح! 4-40 سنة هي الفترة الصحيحة.',
+                    'يوم واحد قصير جداً جداً.'
+                ]
+            }
+        ];
+
+        // Question Bank - Model B (Application)
+        const questionsModelB = [
+            {
+                id: 'b1',
+                conceptId: 'c2',
+                question: 'سيناريو: عامل سقط من سلم أثناء تركيب أنابيب في موقع عمل. هل يعتبر هذا حادثاً مهنياً؟',
+                options: [
+                    'لا، لأنه سقط من سلم',
+                    'نعم، لأنه حدث أثناء تأدية عمله',
+                    'لا، لأن السقوط حادث عادي',
+                    'يعتمد على ارتفاع السلم'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'apply',
+                explanationCorrect: 'الحادث مهني لأنه وقع أثناء تأدية العمل.',
+                explanationWrong: [
+                    'السقوط من السلم لا يلغي طبيعته المهنية.',
+                    'صحيح! الحادث وقع أثناء العمل.',
+                    'الحادث مرتبط بالعمل.',
+                    'الارتفاع لا يحدد الطبيعة المهنية.'
+                ]
+            },
+            {
+                id: 'b2',
+                conceptId: 'c5',
+                question: 'سيناريو: عامل في مصنع أخشاب يعاني من صعوبة في التنفس وسعال جاف بعد 6 ساعات من بدء العمل. ما التشخيص الأرجح؟',
+                options: [
+                    'نزلة برد عادية',
+                    'ربو مهني',
+                    'التهاب رئوي',
+                    'حساسية موسمية'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'الأعراض بعد فترة من العمل في مصنع أخشاب تشير إلى ربو مهني.',
+                explanationWrong: [
+                    'نزلة البرد لا ترتبط بوقت العمل.',
+                    'صحيح! الربو المهني يتطابق مع السيناريو.',
+                    'الالتهاب الرئوي ليس مرتبطاً ببيئة العمل.',
+                    'الحساسية الموسمية لا ترتبط بوقت العمل.'
+                ]
+            },
+            {
+                id: 'b3',
+                conceptId: 'c6',
+                question: 'سيناريو: عامل مناجم فحم يعاني من ضيق تنفس تدريجي بعد 20 سنة من العمل. ما التشخيص الأرجح؟',
+                options: ['السيليكوزيس', 'فحمياً الرئة', 'الربو', 'التهاب رئوي حاد'],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'فحمياً الرئة (Coal workers pneumoconiosis) يصيب عمال مناجم الفحم.',
+                explanationWrong: [
+                    'السيليكوزيس من السيليكا وليس الفحم.',
+                    'صحيح! فحمياً الرئة يصيب عمال مناجم الفحم.',
+                    'الربو ليس مرتبطاً بالفحم.',
+                    'الالتهاب الرئوي الحاد ليس مزمناً.'
+                ]
+            },
+            {
+                id: 'b4',
+                conceptId: 'c8',
+                question: 'سيناريو: عامل في مصنع بطاريات يعاني من اضطرابات ذاكرة وصداع مستمر. ما المادة المسببة الأرجح؟',
+                options: ['الزئبق', 'الرصاص', 'المنغنيز', 'الكادميوم'],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'الرصاص شائع في صناعة البطاريات ويسبب اضطرابات عصبية.',
+                explanationWrong: [
+                    'الزئبق ليس شائعاً في البطاريات.',
+                    'صحيح! الرصاص مادة شائعة في صناعة البطاريات.',
+                    'المنغنيز ليس شائعاً في البطاريات.',
+                    'الكادميوم ليس الشائع في البطاريات.'
+                ]
+            },
+            {
+                id: 'b5',
+                conceptId: 'c10',
+                question: 'سيناريو: عامل في مصنع بلاستيك يعمل بالاحتراق الداخلي يشعر بدوار وصداع. ما المادة المسببة؟',
+                options: ['أول أكسيد الكربون', 'الأمونيا', 'الكلور', 'الفسفين'],
+                correctIndex: 0,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'أول أكسيد الكربون ينتج من الاحتراق غير الكامل ويسبب هذه الأعراض.',
+                explanationWrong: [
+                    'صحيح! أول أكسيد الكربون ينتج من الاحتراق.',
+                    'الأمونيا ليست من منتجات الاحتراق.',
+                    'الكلور ليس من منتجات الاحتراق.',
+                    'الفسفين ليس من منتجات الاحتراق العادي.'
+                ]
+            },
+            {
+                id: 'b6',
+                conceptId: 'c11',
+                question: 'سيناريو: ممرضة تطور طفحاً جلدياً بعد شهر من العمل في المستشفى. ما النوع الأرجح؟',
+                options: [
+                    'التهاب جلدي مهيج أولي',
+                    'التهاب جلدي تحسسي',
+                    'عدوى بكتيرية',
+                    'حروق شمسية'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'فترة الشهر تشير إلى فترة تحسس أولية مطلوبة للنوع التحسسي.',
+                explanationWrong: [
+                    'المهيج الأولي يظهر فوراً.',
+                    'صحيح! فترة الشهر تشير للنوع التحسسي.',
+                    'عدوى بكتيرية لها أعراض مختلفة.',
+                    'الحروق الشمسية غير مرتبطة بالعمل.'
+                ]
+            },
+            {
+                id: 'b7',
+                conceptId: 'c12',
+                question: 'سيناريو: عامل تنظيف جاف يعاني من اصفرار في العينين وبول داكن. ما التشخيص؟',
+                options: ['فشل كلوي', 'تليف كبدي', 'فقر دم', 'تسمم رصاصي'],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'الأعراض تشير إلى مشكلة في الكبد (تليف كبدي من المذيبات).',
+                explanationWrong: [
+                    'فشل كلوي له أعراض مختلفة.',
+                    'صحيح! المذيبات تؤثر على الكبد.',
+                    'فقر الدم لا يسبب هذه الأعراض.',
+                    'التسمم الرصاصي له أعراض مختلفة.'
+                ]
+            },
+            {
+                id: 'b8',
+                conceptId: 'c13',
+                question: 'سيناريو: عامل في محطة بنزين يعاني من كدمات متكررة ونزيف من اللثة. ما التشخيص؟',
+                options: ['سكري', 'فقر دم انحلالي', 'تسمم زئبقي', 'نقص فيتامين C'],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'البنزين يسبب فقر الدم الانحلالي (Aplastic anemia) ونقص الصفائح.',
+                explanationWrong: [
+                    'السكري لا يسبب كدمات متكررة فوراً.',
+                    'صحيح! البنزين يسبب فقر الدم الانحلالي.',
+                    'التسمم الزئبقي له أعراض مختلفة.',
+                    'نقص فيتامين C غير مرتبط بالبنزين.'
+                ]
+            },
+            {
+                id: 'b9',
+                conceptId: 'c14',
+                question: 'سيناريو: عامل ينظف خزاناً بمذيب عضوي بدون قفازات. ما الطريق الأسرع للدخول؟',
+                options: ['التنفس', 'الجلد', 'الابتلاع', 'العين'],
+                correctIndex: 1,
+                bloomLevel: 'apply',
+                explanationCorrect: 'المذيبات العضوية تدخل بسرعة عبر الجلد خاصة بدون حماية.',
+                explanationWrong: [
+                    'التنفس ليس الأسرع في هذه الحالة.',
+                    'صحيح! الجلد مباشر مع المذيب.',
+                    'الابتلاع غير محتمل في التنظيف.',
+                    'العين ليست الطريق الرئيسي.'
+                ]
+            },
+            {
+                id: 'b10',
+                conceptId: 'c15',
+                question: 'سيناريو: قياسات تظهر تعرضاً لـ 15 دقيقة فوق الحد المسموح به. أي الحدود انتهك؟',
+                options: ['MAC-TWA', 'MAC-STEL', 'MAC-C', 'حد التعرض اليومي المتراكم'],
+                correctIndex: 1,
+                bloomLevel: 'apply',
+                explanationCorrect: 'MAC-STEL هو حد التعرض القصير المدى لـ 15 دقيقة.',
+                explanationWrong: [
+                    'MAC-TWA لـ 8 ساعات.',
+                    'صحيح! 15 دقيقة هي فترة STEL.',
+                    'MAC-C هو الحد الفوري.',
+                    'ليس كل الحدود.'
+                ]
+            },
+            {
+                id: 'b11',
+                conceptId: 'c4',
+                question: 'سيناريو: عامل تعرض لمادة كيميائية قبل 10 سنوات وظهرت أعراض الآن. هل يمكن تشخيصه كمرض مهني؟',
+                options: [
+                    'لا، لأن الفترة طويلة',
+                    'نعم، إذا توافقت الفترة مع فسيولوجيا المرض',
+                    'لا، لأن التشخيص يجب أن يكون فورياً',
+                    'يعتمد على نوع العمل الحالي'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'فترة الحضانة للأمراض المهنية قد تكون طويلة ويجب أن تتوافق مع الفسيولوجيا المرضية.',
+                explanationWrong: [
+                    'الفترة الطويلة ممكنة في الأمراض المهنية.',
+                    'صحيح! يجب توافق الفترة مع الفسيولوجيا.',
+                    'التشخيص ليس دائماً فورياً.',
+                    'العمل الحالي ليس المعيار.'
+                ]
+            },
+            {
+                id: 'b12',
+                conceptId: 'c7',
+                question: 'سيناريو: انفجار في مصنع أسمدة ودخان أصفر يتصاعد. ما الغاز الأرجح؟',
+                options: ['أول أكسيد الكربون', 'ثاني أكسيد النيتروجين', 'الأمونيا', 'الكلور'],
+                correctIndex: 1,
+                bloomLevel: 'apply',
+                explanationCorrect: 'ثاني أكسيد النيتروجين (NO2) غاز أصفر ينتج من انفجارات الأسمدة.',
+                explanationWrong: [
+                    'أول أكسيد الكربون عديم اللون.',
+                    'صحيح! NO2 غاز أصفر.',
+                    'الأمونيا عديمة اللون.',
+                    'الكلور أخضر وليس أصفر.'
+                ]
+            },
+            {
+                id: 'b13',
+                conceptId: 'c9',
+                question: 'سيناريو: عامل طلاء يعاني من ألم في الخاصرة ودم في البول. ما المادة المسببة؟',
+                options: ['الرصاص', 'الزئبق', 'التوالين', 'الأسيتون'],
+                correctIndex: 2,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'التوالين في الطلاء يسبب تلف الكلى والدم في البول.',
+                explanationWrong: [
+                    'الرصاص يسبب أعراضاً مختلفة.',
+                    'الزئبق يسبب أعراضاً مختلفة.',
+                    'صحيح! التوالين شائع في الطلاء.',
+                    'الأسيتون أقل تأثيراً على الكلى.'
+                ]
+            },
+            {
+                id: 'b14',
+                conceptId: 'c3',
+                question: 'سيناريو: انخفاض حوادث العمل بنسبة 8% مع زيادة عدد العمال. ما التفسير؟',
+                options: [
+                    'زيادة الإهمال',
+                    'تحسن في إجراءات السلامة',
+                    'تقليل ساعات العمل',
+                    'زيادة التأمين'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'انخفاض الحوادث مع زيادة العمال يشير لتحسن إجراءات السلامة.',
+                explanationWrong: [
+                    'الإهمال يزيد الحوادث.',
+                    'صحيح! تحسن السلامة يفسر الانخفاض.',
+                    'لا يوجد ذكر لتقليل الساعات.',
+                    'التأمين لا يقلل الحوادث مباشرة.'
+                ]
+            },
+            {
+                id: 'b15',
+                conceptId: 'c1',
+                question: 'سيناريو: شركة تريد تطوير برنامج سلامة. أي المراجع الأقدم فائدة؟',
+                options: [' writings من 2000 عام', ' writings من 1800 عام', ' writings من 1700 عام', ' writings من 1900 عام'],
+                correctIndex: 2,
+                bloomLevel: 'evaluate',
+                explanationCorrect: 'كتابات رامازيني من 1700م هي الأساس التاريخي للأمراض المهنية.',
+                explanationWrong: [
+                    '2000 عام حديثة.',
+                    '1800 عام مهمة لكن ليست الأقدم فائدة.',
+                    'صحيح! رامازيني 1700م هو الأساس.',
+                    '1900 عام متأخرة.'
+                ]
+            },
+            {
+                id: 'b16',
+                conceptId: 'c5',
+                question: 'سيناريو: عامل يتحسن عندما يبتعد عن العمل ويعود المرض عند العودة. ما التشخيص؟',
+                options: [
+                    'نزلة برد مزمنة',
+                    'ربو مهني',
+                    'حساسية من المنزل',
+                    'إرهاق عام'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'تحسن العامل عند الابتعاد عن العمل يشير إلى ربو مهني.',
+                explanationWrong: [
+                    'نزلة البرد لا تتحسن بالابتعاد.',
+                    'صحيح! الربو المهني يتحسن بالابتعاد.',
+                    'المنزل ليس مرتبطاً بالتحسن.',
+                    'الإرهاق لا يرتبط بمكان محدد.'
+                ]
+            },
+            {
+                id: 'b17',
+                conceptId: 'c6',
+                question: 'سيناريو: عامل محجر يعاني من ضيق تنفس وسعال جاف. صدره X-ray يظهر بقع بيضاء. ما التشخيص؟',
+                options: ['الربو', 'السيليكوزيس', 'السل', 'التهاب رئوي'],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'السيليكوزيس يصيب عمال المحاجر ويظهر بقع بيضاء في الأشعة.',
+                explanationWrong: [
+                    'الربو لا يظهر بقعاً بيضاء.',
+                    'صحيح! السيليكوزيس يتطابق مع السيناريو.',
+                    'السل له صورة أشعة مختلفة.',
+                    'الالتهاب الرئوي حاد وليس مزمناً.'
+                ]
+            },
+            {
+                id: 'b18',
+                conceptId: 'c8',
+                question: 'سيناريو: عامل مطابع يعاني من رعشة في اليدين وصعوبة في الكلام. ما المادة؟',
+                options: ['الرصاص', 'الزئبق', 'المنغنيز', 'الزرنيخ'],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'الزئبق في المطابع يسبب الرعشة واضطراب الكلام (Mad Hatter disease).',
+                explanationWrong: [
+                    'الرصاص يسبب أعراضاً مختلفة.',
+                    'صحيح! الزئبق شائع في المطابع.',
+                    'المنغنيز يسبب أعراضاً مختلفة.',
+                    'الزرنيخ يسبب أعراضاً مختلفة.'
+                ]
+            },
+            {
+                id: 'b19',
+                conceptId: 'c10',
+                question: 'سيناريو: عامل يعمل في موقف سيارات مغلق يشعر بصداع وغثيان. ما السبب؟',
+                options: ['نقص الأكسجين', 'أول أكسيد الكربون', 'ثاني أكسيد الكربون', 'الأمونيا'],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'أول أكسيد الكربون من عوادم السيارات يسبب هذه الأعراض.',
+                explanationWrong: [
+                    'نقص الأكسجين ممكن لكن CO أكثر ترجيحاً.',
+                    'صحيح! أول أكسيد الكربون من عوادم السيارات.',
+                    'ثاني أكسيد الكربون أقل سمية.',
+                    'الأمونيا ليست من عوادم السيارات.'
+                ]
+            },
+            {
+                id: 'b20',
+                conceptId: 'c11',
+                question: 'سيناريو: عامل نظافة يطور طفحاً حاداً بعد أول يوم عمل. ما النوع؟',
+                options: [
+                    'التهاب جلدي تحسسي',
+                    'التهاب جلدي مهيج أولي',
+                    'عدوى فطرية',
+                    'حروق كيميائية'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'ظهور الطفح فوراً بعد أول تعرض يشير للنوع المهيج الأولي.',
+                explanationWrong: [
+                    'التحسسي يحتاج فترة تحسس.',
+                    'صحيح! المهيج الأولي يظهر فوراً.',
+                    'العدوى الفطرية لا تظهر فوراً.',
+                    'الحروق لها مظهر مختلف.'
+                ]
+            },
+            {
+                id: 'b21',
+                conceptId: 'c12',
+                question: 'سيناريو: عامل يعمل مع مذيبات يعاني من تورم في البطن وارتباك. ما التشخيص؟',
+                options: ['فشل كلوي', 'استسقاء كبدي', 'فشل قلبي', 'سكري'],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'المذيبات تسبب تلف الكبد واستسقاء كبدي (Ascites).',
+                explanationWrong: [
+                    'فشل كلوي له أعراض مختلفة.',
+                    'صحيح! المذيبات تؤثر على الكبد.',
+                    'فشل قلبي غير مرتبط بالمذيبات.',
+                    'السكري له أعراض مختلفة.'
+                ]
+            },
+            {
+                id: 'b22',
+                conceptId: 'c13',
+                question: 'سيناريو: عامل بنزين يعاني من إرهاق شديد وتنفس سريع. تحليل الدم يظهر فقر دم. ما التشخيص؟',
+                options: ['فقر دم حديدي', 'فقر دم انحلالي', 'فقر دم نقص B12', 'نزيف داخلي'],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'البنزين يسبب فقر الدم الانحلالي (Aplastic anemia).',
+                explanationWrong: [
+                    'فقر الدم الحديدي غير مرتبط بالبنزين.',
+                    'صحيح! البنزين يسبب فقر الدم الانحلالي.',
+                    'نقص B12 غير مرتبط بالبنزين.',
+                    'لا يوجد دليل على نزيف.'
+                ]
+            },
+            {
+                id: 'b23',
+                conceptId: 'c14',
+                question: 'سيناريو: عامل يرش مبيدات حشرية بدون كمامة. ما الطريق الأسرع للدخول؟',
+                options: ['الجلد', 'التنفس', 'الابتلاع', 'العين'],
+                correctIndex: 1,
+                bloomLevel: 'apply',
+                explanationCorrect: 'الرش يخلق قطرات صغيرة تدخل عبر التنفس بسرعة.',
+                explanationWrong: [
+                    'الجلد ليس الأسرع في حالة الرش.',
+                    'صحيح! التنفس هو الطريق الأسرع للرش.',
+                    'الابتلاع غير محتمل.',
+                    'العين ليست الطريق الرئيسي.'
+                ]
+            },
+            {
+                id: 'b24',
+                conceptId: 'c15',
+                question: 'سيناريو: قياسات 8 ساعات تظهر متوسطاً فوق الحد. أي الحدود انتهك؟',
+                options: ['MAC-TWA', 'MAC-STEL', 'MAC-C', 'OEL'],
+                correctIndex: 0,
+                bloomLevel: 'apply',
+                explanationCorrect: 'متوسط 8 ساعات يتعلق بـ MAC-TWA (Time-Weighted Average).',
+                explanationWrong: [
+                    'صحيح! TWA هو متوسط 8 ساعات.',
+                    'STEL لـ 15 دقيقة.',
+                    'MAC-C هو الحد الفوري.',
+                    'OEL مصطلح عام.'
+                ]
+            },
+            {
+                id: 'b25',
+                conceptId: 'c2',
+                question: 'سيناريو: عامل أصيب أثناء رحلة عمل رسمية. هل يعتبر حادثاً مهنياً؟',
+                options: [
+                    'لا، لأنه خارج موقع العمل',
+                    'نعم، لأنه في رحلة عمل رسمية',
+                    'يعتمد على المسافة',
+                    'لا، لأنه في طريقه'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'apply',
+                explanationCorrect: 'الرحلات الرسمية تعتبر جزءاً من العمل.',
+                explanationWrong: [
+                    'الرحلة الرسمية تعتبر عمل.',
+                    'صحيح! الرحلة الرسمية جزء من العمل.',
+                    'المسافة ليست المعيار.',
+                    'الرحلة الرسمية تختلف عن الذهاب العادي.'
+                ]
+            },
+            {
+                id: 'b26',
+                conceptId: 'c4',
+                question: 'سيناريو: مريض تعرض لمادة قبل 5 سنوات والآن لديه سرطان رئة. المادة معروفة بأنها مسرطنة. هل يمكن الربط؟',
+                options: [
+                    'لا، لأن الفترة قصيرة',
+                    'نعم، إذا كانت المادة مسرطنة',
+                    'لا، لأن السرطان له أسباب كثيرة',
+                    'يعتمد على عمر المريض'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'evaluate',
+                explanationCorrect: '5 سنوات ضمن فترة الحضانة 4-40 سنة للمواد المسرطنة.',
+                explanationWrong: [
+                    '5 سنوات ليست قصيرة للمسرطنات.',
+                    'صحيح! الفترة ضمن المدى المعقول.',
+                    'الأسباب الكثيرة لا تلغي الربط.',
+                    'العمر عامل لكن ليس الحاسم.'
+                ]
+            },
+            {
+                id: 'b27',
+                conceptId: 'c7',
+                question: 'سيناريو: تسرب غاز في مختبر كيميائي ورائحة حادة. الأعراض تظهر فوراً. ما الغاز الأرجح؟',
+                options: ['أول أكسيد الكربون', 'الكلور', 'الأمونيا', 'الفسفين'],
+                correctIndex: 2,
+                bloomLevel: 'apply',
+                explanationCorrect: 'الأمونيا لها رائحة حادة قوية وتسبب أعراضاً فورية.',
+                explanationWrong: [
+                    'أول أكسيد الكربون عديم الرائحة.',
+                    'الكلور له رائحة لكن الأمونيا أقوى.',
+                    'صحيح! الأمونيا لها رائحة حادة فورية.',
+                    'الفسفين له رائحة الثوم.'
+                ]
+            },
+            {
+                id: 'b28',
+                conceptId: 'c9',
+                question: 'سيناريو: عامل يتعامل مع الزئبق يعاني من بروتين في البول. ما التأثير؟',
+                options: ['فشل كلوي', 'متلازمة نفرية', 'عدوى بولية', 'حصوات كلى'],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'الزئبق يسبب تلف الكلى والبروتين في البول (متلازمة نفرية).',
+                explanationWrong: [
+                    'فشل كلوي حاد مختلف.',
+                    'صحيح! البروتين يشير للمتلازمة النفرية.',
+                    'عدوى بولية لها أعراض مختلفة.',
+                    'الحصوات لا تسبب بروتين.'
+                ]
+            },
+            {
+                id: 'b29',
+                conceptId: 'c3',
+                question: 'سيناريو: إحصائيات تظهر أن معظم الإصابات من "التعرض للقوى". ما هو العامل الأكثر احتمالاً للمساهمة في هذه الإصابات؟',
+                options: [
+                    'ضعف في تدريب العمال على الرفع الصحيح',
+                    'طبيعة العمل تتطلب تحريك أجسام ثقيلة باستمرار',
+                    'نقص في معدات الحماية الشخصية المخصصة',
+                    'غياب إجراءات الإبلاغ عن الحوادث'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'evaluate',
+                explanationCorrect: 'طبيعة العمل التي تتطلب تحريك الأجسام الثقيلة هي العامل الجذري المباشر لإصابات التعرض للقوى.',
+                explanationWrong: [
+                    'التدريب عامل مهم لكنه ليس السبب الجذري في هذا السيناريو.',
+                    'صحيح! طبيعة العمل تفرض التعرض المستمر للقوى.',
+                    'معدات الحماية تقلل المخاطر لكن طبيعة العمل هي الأصل.',
+                    'الإبلاغ لا يمنع الإصابات بل يوثقها.'
+                ]
+            },
+            {
+                id: 'b30',
+                conceptId: 'c1',
+                question: 'سيناريو: شركة تريد فهم أصول السلامة المهنية. أي المصادر الأكثر أهمية تاريخياً؟',
+                options: [
+                    'قوانين القرن 20',
+                    'كتابات رامازيني',
+                    'معايير ISO الحديثة',
+                    'دراسات السلامة الأمريكية'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'evaluate',
+                explanationCorrect: 'كتابات رامازيني هي الأساس التاريخي للأمراض المهنية.',
+                explanationWrong: [
+                    'قوانين القرن 20 متأخرة.',
+                    'صحيح! رامازيني هو الأصل التاريخي.',
+                    'ISO حديثة نسبياً.',
+                    'الدراسات الأمريكية متأخرة.'
+                ]
+            }
+        ];
+
+        // Question Bank - Model C (Analytical)
+        const questionsModelC = [
+            {
+                id: 'c1',
+                conceptId: 'c4',
+                question: 'محلل: عامل يعمل في مصنع بلاستيك لمدة 15 سنة. لديه ضيق تنفس تدريجي وسعال جاف. الأشعة تظهر تليف رئوي. ما الخطوات لتأكيد التشخيص المهني؟',
+                options: [
+                    'فحص دم فقط',
+                    'تقييم التعرض + الآثار المعروفة + الفترة الزمنية',
+                    'أشعة مقطعية فقط',
+                    'اختبار وظائف الرئة فقط'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'معايير تشخيص المرض المهني تتطلب تقييم التعرض والآثار المعروفة والفترة الزمنية.',
+                explanationWrong: [
+                    'فحص الدم وحده غير كافٍ.',
+                    'صحيح! المعايير الثلاثة ضرورية للتشخيص.',
+                    'الأشعة وحدها غير كافية.',
+                    'اختبار وظائف الرئة وحده غير كافٍ.'
+                ]
+            },
+            {
+                id: 'c2',
+                conceptId: 'c5',
+                question: 'محلل: مقارنة بين عامل يعمل في مصنع أخشاب لمدة سنة وآخر لمدة 10 سنوات. كلاهما يعاني من ربو. ما الفرق المتوقع؟',
+                options: [
+                    'لا فرق بينهما',
+                    'الأقدم عرضة للربو المهني المحدد بالمناعة',
+                    'الأحدث عرضة للربو المهني المحدد بالمناعة',
+                    'الأقدم عرضة للربو غير المحدد بالمناعة'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'الربو المهني المحدد بالمناعة يحتاج فترة تحسس أولية (سنوات).',
+                explanationWrong: [
+                    'هناك فرق في آلية التحسس.',
+                    'صحيح! الأقدم عرضة للنوع المحدد بالمناعة.',
+                    'الأحدث قد لا يكون لديه وقت كافٍ للتحسس.',
+                    'الأقدم عرضة للنوع المحدد بالمناعة.'
+                ]
+            },
+            {
+                id: 'c3',
+                conceptId: 'c6',
+                question: 'محلل: عمال محجر سيليكا يطورون أمراضاً بعد فترات مختلفة. ما العوامل التي تؤثر على سرعة ظهور المرض؟',
+                options: [
+                    'عمر العامل فقط',
+                    'تركيز السيليكا + مدة التعرض + عوامل فردية',
+                    'نوع العمل فقط',
+                    'التدخين فقط'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'سرعة ظهور السيليكوزيس تعتمد على تركيز السيليكا ومدة التعرض والعوامل الفردية.',
+                explanationWrong: [
+                    'العمر ليس العامل الوحيد.',
+                    'صحيح! عدة عوامل تؤثر على سرعة المرض.',
+                    'نوع العمل جزء فقط من الصورة.',
+                    'التدخين عامل مساعد لكن ليس الوحيد.'
+                ]
+            },
+            {
+                id: 'c4',
+                conceptId: 'c8',
+                question: 'محلل: عاملان يتعاملان مع نفس المادة العصبية. الأول يعاني من اضطرابات ذاكرة والثاني من رعشة. ما التفسير؟',
+                options: [
+                    'خطأ في التشخيص',
+                    'اختلاف في آلية التأثير أو عوامل فردية',
+                    'مادة مختلفة',
+                    'تزييف الأعراض'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'المواد العصبية قد تؤثر بشكل مختلف على الأفراد حسب العوامل الفردية.',
+                explanationWrong: [
+                    'الاختلاف ممكن وطبيعي.',
+                    'صحيح! العوامل الفردية تلعب دوراً.',
+                    'لا يوجد دليل على مادة مختلفة.',
+                    'لا أساس للشك في صدق الأعراض.'
+                ]
+            },
+            {
+                id: 'c5',
+                conceptId: 'c10',
+                question: 'محلل: مصنعان يستخدمان أول أكسيد الكربون. الأول لديه تهوية جيدة والثاني لا. ما الفرق في المخاطر؟',
+                options: [
+                    'لا فرق',
+                    'الثاني أخطر بكثير بسبب تراكم الغاز',
+                    'الأول أكثر خطورة',
+                    'التهوية لا تؤثر'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'نقص التهوية يسمح بتراكم أول أكسيد الكربون وزيادة الخطر.',
+                explanationWrong: [
+                    'التهوية تؤثر بشكل كبير.',
+                    'صحيح! التهوية السيئة تزيد التراكم والخطر.',
+                    'التهوية الجيدة تقلل الخطر.',
+                    'التهوية عامل حاسم في السلامة.'
+                ]
+            },
+            {
+                id: 'c6',
+                conceptId: 'c11',
+                question: 'محلل: عامل يتعامل مع مادة كيميائية. بعد أسبوع ظهر طفح جلدي. كيف تميز بين المهيج والتحسسي؟',
+                options: [
+                    'لا يمكن التمييز',
+                    'الوقت: المهيج فوري، التحسسي يحتاج أسابيع',
+                    'الشكل فقط',
+                    'الموقع فقط'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'الوقت هو المفتاح: المهيج فوري والتحسسي يحتاج فترة تحسس.',
+                explanationWrong: [
+                    'يمكن التمييز بالوقت والآلية.',
+                    'صحيح! الوقت هو عامل التمييز الرئيسي.',
+                    'الشكل قد يكون متشابهاً.',
+                    'الموقع ليس مميزاً.'
+                ]
+            },
+            {
+                id: 'c7',
+                conceptId: 'c12',
+                question: 'محلل: عاملان يتعاملان مع نفس المذيب. الأول يشرب كحول والثاني لا. من الأكثر عرضة لتلف الكبد؟',
+                options: [
+                    'لا فرق',
+                    'الأول بسبب التآزر بين الكحول والمذيب',
+                    'الثاني لأن الكحول يحمي',
+                    'لا يمكن التحديد'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'التآزر بين الكحول والمذيبات يزيد من تلف الكبد.',
+                explanationWrong: [
+                    'هناك فرق بسبب التآزر.',
+                    'صحيح! الكحول والمذيب يتآزران في تلف الكبد.',
+                    'الكحول لا يحمي بل يزيد الضرر.',
+                    'يمكن التحديد بناءً على معرفة التآزر.'
+                ]
+            },
+            {
+                id: 'c8',
+                conceptId: 'c13',
+                question: 'محلل: عامل بنزين يعاني من فقر دم. تحليل النخاع العظمي يظهر خلل. ما العلاقة السببية؟',
+                options: [
+                    'لا علاقة',
+                    'البنزين يسبب تلف النخاع العظمي وفقر الدم الانحلالي',
+                    'صدفة',
+                    'وراثي بالضرورة'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'البنزين معروف بتسببه في تلف النخاع العظمي وفقر الدم الانحلالي.',
+                explanationWrong: [
+                    'هناك علاقة معروفة طبياً.',
+                    'صحيح! البنزين يسبب aplastic anemia.',
+                    'ليست صدفة بل علاقة سببية معروفة.',
+                    'قد يكون وراثياً لكن البنزين محفز.'
+                ]
+            },
+            {
+                id: 'c9',
+                conceptId: 'c14',
+                question: 'محلل: مقارنة بين دخول المادة عبر الجلد والتنفس. متى يكون الجلد أسرع؟',
+                options: [
+                    'دائماً',
+                    'مع المذيبات الدهنية ووجود تماس مباشر',
+                    'أبداً',
+                    'مع الغازات فقط'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'المذيبات الدهنية تخترق الجلد بسرعة خاصة مع تماس مباشر.',
+                explanationWrong: [
+                    'ليس دائماً، يعتمد على نوع المادة.',
+                    'صحيح! المذيبات الدهنية تدخل عبر الجلد.',
+                    'الجلد قد يكون سريعاً مع مواد معينة.',
+                    'الغازات تدخل عبر التنفس.'
+                ]
+            },
+            {
+                id: 'c10',
+                conceptId: 'c15',
+                question: 'محلل: مصنع يستخدم مادة كيميائية. القياسات تظهر: 10 دقائق فوق الحد، ثم 6 ساعات تحت الحد. ما التقييم؟',
+                options: [
+                    'آمن لأن معظم الوقت تحت الحد',
+                    'MAC-STEL انتهك، MAC-TWA قد يكون آمن',
+                    'لا مشكلة',
+                    'MAC-TWA انتهك بالضرورة'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: '10 دقائق فوق الحد تنتهك MAC-STEL، لكن MAC-TWA يعتمد على المتوسط.',
+                explanationWrong: [
+                    'الفترات القصيرة فوق الحد مهمة.',
+                    'صحيح! STEL انتهك لكن TWA قد يكون آمن.',
+                    'هناك انتهاك لـ STEL.',
+                    'TWA يعتمد على المتوسط وليس مضموناً.'
+                ]
+            },
+            {
+                id: 'c11',
+                conceptId: 'c1',
+                question: 'محلل: لماذا تطورت السلامة المهنية ببطء حتى القرن التاسع عشر؟',
+                options: [
+                    'نقص في التكنولوجيا',
+                    'عدم الاكتراث بالعمال + عدم المعرفة العلمية + الضغط الاقتصادي',
+                    'عدم وجود عمال',
+                    'الحروب فقط'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'evaluate',
+                explanationCorrect: 'تطور السلامة المهنية تأخر بسبب عدة عوامل اجتماعية واقتصادية وعلمية.',
+                explanationWrong: [
+                    'التكنولوجيا ليست العامل الوحيد.',
+                    'صحيح! عدة عوامل ساهمت في التأخير.',
+                    'كان هناك عمال لكن لم يحظوا بالحماية.',
+                    'الحروب عامل ثانوي.'
+                ]
+            },
+            {
+                id: 'c12',
+                conceptId: 'c2',
+                question: 'محلل: مقارنة بين حادث مهني وحادث مروري أثناء العمل. ما الفرق في التعامل؟',
+                options: [
+                    'لا فرق',
+                    'الحادث المهني يخضع لإجراءات السلامة المهنية والتعويضات الخاصة',
+                    'الحادث المروري أهم',
+                    'الحادث المهني لا يعوض'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'الحوادث المهنية لها إجراءات وتعويضات خاصة بها.',
+                explanationWrong: [
+                    'هناك فرق في الإجراءات والتعويضات.',
+                    'صحيح! الحادث المهني له إجراءات خاصة.',
+                    'كلاهما مهم لكن بطرق مختلفة.',
+                    'الحادث المهني يعوض.'
+                ]
+            },
+            {
+                id: 'c13',
+                conceptId: 'c3',
+                question: 'محلل: انخفضت الإصابات بنسبة 8% مع زيادة العمال. ما العوامل المحتملة؟',
+                options: [
+                    'حظ فقط',
+                    'تحسن إجراءات السلامة + تدريب + رقابة',
+                    'تقليل ساعات العمل فقط',
+                    'تغيير نوع العمل'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'evaluate',
+                explanationCorrect: 'الانخفاض مع زيادة العمال يشير لتحسن في إجراءات السلامة والتدريب.',
+                explanationWrong: [
+                    'الحظ ليس تفسيراً علمياً.',
+                    'صحيح! عدة عوامل تفسّر التحسن.',
+                    'لا يوجد ذكر لتقليل الساعات.',
+                    'لا يوجد ذكر لتغيير نوع العمل.'
+                ]
+            },
+            {
+                id: 'c14',
+                conceptId: 'c5',
+                question: 'محلل: عامل يتحسن في العطلات ويعود المرض للعمل. كيف تؤكد أنه ربو مهني؟',
+                options: [
+                    'لا يمكن التأكد',
+                    'تحسن الابتعاد + عودة المرض + بيئة العمل + فحوصات',
+                    'السؤال فقط',
+                    'الأشعة فقط'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'الربو المهني يتطلب تأكيداً من خلال تحسن الابتعاد وعودة المرض وبيئة العمل.',
+                explanationWrong: [
+                    'يمكن التأكد بعدة طرق.',
+                    'صحيح! عدة عوامل تؤكد التشخيص.',
+                    'السؤال وحده غير كافٍ.',
+                    'الأشعة وحدها غير كافية.'
+                ]
+            },
+            {
+                id: 'c15',
+                conceptId: 'c6',
+                question: 'محلل: لماذا يستمر تقدم السيليكوزيس حتى بعد التوقف عن التعرض؟',
+                options: [
+                    'خطأ في العلاج',
+                    'التليف الرئوي غير قابل للانعكاس',
+                    'عدوى مصاحبة',
+                    'تدخين العامل'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'التليف الرئوي في السيليكوزيس غير قابل للانعكاس حتى بعد التوقف عن التعرض.',
+                explanationWrong: [
+                    'ليست مشكلة في العلاج.',
+                    'صحيح! التليف دائم وغير قابل للانعكاس.',
+                    'ليست عدوى مصاحبة.',
+                    'التدخين يزيد لكنه ليس السبب الرئيسي.'
+                ]
+            },
+            {
+                id: 'c16',
+                conceptId: 'c8',
+                question: 'محلل: مقارنة بين تأثير الرصاص والزئبق على الجهاز العصبي. ما الاختلاف؟',
+                options: [
+                    'لا اختلاف',
+                    'الرصاص: اضطرابات ذاكرة، الزئبق: رعشة واضطراب كلام',
+                    'نفس التأثيرات تماماً',
+                    'الرصاص أكثر خطورة دائماً'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'الرصاص يسبب اضطرابات ذاكرة، والزئبق يسبب الرعشة واضطراب الكلام.',
+                explanationWrong: [
+                    'هناك اختلاف في التأثيرات.',
+                    'صحيح! كل مادة لها تأثيرات مميزة.',
+                    'التأثيرات مختلفة.',
+                    'الخطورة تعتمد على الجرعة والتعرض.'
+                ]
+            },
+            {
+                id: 'c17',
+                conceptId: 'c10',
+                question: 'محلل: عامل يتعامل مع أول أكسيد الكربون ومدخن. كيف تتآثر هذه العوامل؟',
+                options: [
+                    'لا تآثر',
+                    'التدخين يزيد من حساسية الجسم لأول أكسيد الكربون',
+                    'التدخين يحمي من أول أكسيد الكربون',
+                    'تآثر غير معروف'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'التدخين يزيد من حساسية الجسم لتأثيرات أول أكسيد الكربون.',
+                explanationWrong: [
+                    'هناك تآثر معروف.',
+                    'صحيح! التدخين يزيد الحساسية.',
+                    'التدخين لا يحمي بل يزيد الضرر.',
+                    'التآثر معروف علمياً.'
+                ]
+            },
+            {
+                id: 'c18',
+                conceptId: 'c11',
+                question: 'محلل: لماذا يصاب بعض العمال بالتهاب جلدي تحسسي والبعض لا مع نفس المادة؟',
+                options: [
+                    'خطأ في التشخيص',
+                    'الاستعداد الوراثي + شدة التعرض + حالة الجلد',
+                    'تزييف',
+                    'مادة مختلفة'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'الاستعداد الوراثي وشدة التعرض وحالة الجلد تؤثر في الإصابة التحسسية.',
+                explanationWrong: [
+                    'ليس خطأ في التشخيص.',
+                    'صحيح! عوامل فردية تلعب دوراً.',
+                    'ليست تزييفاً.',
+                    'المادة نفسها لكن الاستجابة تختلف.'
+                ]
+            },
+            {
+                id: 'c19',
+                conceptId: 'c12',
+                question: 'محلل: مقارنة بين تلف الكبد الكحولي والمهني. ما أوجه التشابه والاختلاف؟',
+                options: [
+                    'لا تشابه',
+                    'التشابه: تلف الكبد، الاختلاف: المسبب (كحول vs مذيبات)',
+                    'نفس المسبب',
+                    'لا اختلاف'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'التشابه في النتيجة (تلف الكبد)، الاختلاف في المسبب (كحول vs مذيبات).',
+                explanationWrong: [
+                    'هناك تشابه في النتيجة.',
+                    'صحيح! تشابه في النتيجة واختلاف في المسبب.',
+                    'المسببات مختلفة.',
+                    'هناك اختلاف في المسبب.'
+                ]
+            },
+            {
+                id: 'c20',
+                conceptId: 'c13',
+                question: 'محلل: عامل بنزين يعاني من فقر دم. لماذا يستغرق تشخيص aplastic anemia وقتاً؟',
+                options: [
+                    'صعوبة في الفحوصات',
+                    'الأعراض تتطور تدريجياً + فحوصات متعددة مطلوبة',
+                    'لا وقت',
+                    'التشخيص فوري'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'Aplastic anemia يتطلب فحوصات متعددة وتطور الأعراض يكون تدريجياً.',
+                explanationWrong: [
+                    'الفحوصات متوفرة.',
+                    'صحيح! التشخيص يحتاج وقتاً وعدة فحوصات.',
+                    'هناك وقت مطلوب للتشخيص.',
+                    'التشخيص ليس فورياً.'
+                ]
+            },
+            {
+                id: 'c21',
+                conceptId: 'c14',
+                question: 'محلل: مقارنة بين دخول المادة عبر الجلد المكسور والسليم. ما الفرق؟',
+                options: [
+                    'لا فرق',
+                    'الجلد المكسور يسمح بدخول أسرع وأكثر',
+                    'الجلد السليم أسرع',
+                    'لا يدخل عبر الجلد المكسور'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'الجلد المكسور يفقد وظيفته الحاجزة ويسمح بدخول أسرع للمواد.',
+                explanationWrong: [
+                    'هناك فرق كبير.',
+                    'صحيح! الجلد المكسور يسمح بدخول أسرع.',
+                    'الجلد السليم يوفر حماية.',
+                    'يدخل بشكل أسرع عبر الجلد المكسور.'
+                ]
+            },
+            {
+                id: 'c22',
+                conceptId: 'c15',
+                question: 'محلل: مصنع يستخدم MAC-TWA فقط. ما المخاطر المحتملة؟',
+                options: [
+                    'لا مخاطر',
+                    'ذروات قصيرة قد تكون خطيرة حتى مع متوسط آمن',
+                    'كل شيء آمن',
+                    'MAC-TWA يحمي من كل شيء'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'MAC-TWA لا يحمي من الذروات القصيرة الخطرة التي تحتاج MAC-STEL.',
+                explanationWrong: [
+                    'هناك مخاطر من الذروات القصيرة.',
+                    'صحيح! الذروات القصيرة قد تكون خطيرة.',
+                    'ليس كل شيء آمن.',
+                    'MAC-TWA لا يحمي من الذروات.'
+                ]
+            },
+            {
+                id: 'c23',
+                conceptId: 'c4',
+                question: 'محلل: مريض سرطان رئة تعرض للأسبستوس قبل 30 سنة. كيف تثبت العلاقة السببية؟',
+                options: [
+                    'لا يمكن إثباتها',
+                    'الفترة ضمن الحضانة + الآثار المعروفة + تقييم التعرض',
+                    'الوقت وحده كافٍ',
+                    'السرطان يثبت العلاقة'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'evaluate',
+                explanationCorrect: '30 سنة ضمن فترة الحضانة للأسبستوس، مع الآثار المعروفة والتعرض.',
+                explanationWrong: [
+                    'يمكن إثباتها بالمعايير الثلاثة.',
+                    'صحيح! المعايير الثلاثة تؤكد العلاقة.',
+                    'الوقت وحده غير كافٍ.',
+                    'السرطان وحده غير كافٍ.'
+                ]
+            },
+            {
+                id: 'c24',
+                conceptId: 'c7',
+                question: 'محلل: مقارنة بين تأثير غازات الجهاز العلوي والسفلي. ما الفرق؟',
+                options: [
+                    'لا فرق',
+                    'العلوي: تهيج فوري، السفلي: قد يتأخر (وذمة رئوية)',
+                    'نفس التأثيرات',
+                    'السفلي أقل خطورة'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'الجهاز العلوي يظهر تهيجاً فورياً، بينما السفلي قد يتأخر (48-72 ساعة للوذمة).',
+                explanationWrong: [
+                    'هناك فرق في سرعة وطبيعة التأثير.',
+                    'صحيح! العلوي فوري والسفلي قد يتأخر.',
+                    'التأثيرات مختلفة.',
+                    'السفلي قد يكون أكثر خطورة.'
+                ]
+            },
+            {
+                id: 'c25',
+                conceptId: 'c9',
+                question: 'محلل: عامل يتعامل مع الزئبق. ما الفحوصات الدورية المطلوبة؟',
+                options: [
+                    'لا فحوصات',
+                    'وظائف الكلى + بروتين البول + وظائف الكبد',
+                    'فحص القلب فقط',
+                    'فحص العيون فقط'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'apply',
+                explanationCorrect: 'الزئبق يؤثر على الكلى والكبد، لذا يجب فحص وظائف الكلى والكبد وبروتين البول.',
+                explanationWrong: [
+                    'الفحوصات ضرورية.',
+                    'صحيح! فحوصات شاملة للكلى والكبد.',
+                    'القلب ليس الهدف الرئيسي.',
+                    'العيون ليست الهدف الرئيسي.'
+                ]
+            },
+            {
+                id: 'c26',
+                conceptId: 'c3',
+                question: 'محلل: لماذا تختلف معدلات الإصابات بين القطاعات الصناعية؟',
+                options: [
+                    'حظ فقط',
+                    'طبيعة العمل + إجراءات السلامة + التدريب + الرقابة',
+                    'عدد العمال فقط',
+                    'الموقع الجغرافي فقط'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'evaluate',
+                explanationCorrect: 'معدلات الإصابات تختلف بسبب عدة عوامل: طبيعة العمل والسلامة والتدريب.',
+                explanationWrong: [
+                    'ليس حظاً بل عوامل متعددة.',
+                    'صحيح! عدة عوامل تؤثر في المعدلات.',
+                    'عدد العمال ليس العامل الوحيد.',
+                    'الموقع أقل تأثيراً من العوامل الأخرى.'
+                ]
+            },
+            {
+                id: 'c27',
+                conceptId: 'c1',
+                question: 'محلل: ما الدروس المستفادة من تاريخ السلامة المهنية؟',
+                options: [
+                    'لا دروس',
+                    'أهمية التشريعات + البحث العلمي + الوعي المجتمعي',
+                    'الحوادث لا يمكن منعها',
+                    'العمال هم المسؤولون'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'evaluate',
+                explanationCorrect: 'تاريخ السلامة يعلمنا أهمية التشريعات والبحث العلمي والوعي المجتمعي.',
+                explanationWrong: [
+                    'هناك دروس عديدة.',
+                    'صحيح! عدة دروس مستفادة من التاريخ.',
+                    'الحوادث يمكن منعها.',
+                    'المسؤولية مشتركة.'
+                ]
+            },
+            {
+                id: 'c28',
+                conceptId: 'c5',
+                question: 'محلل: مقارنة بين الربو المهني والربو العادي. ما أوجه التشابه والاختلاف؟',
+                options: [
+                    'لا تشابه',
+                    'التشابه: الأعراض، الاختلاف: المسبب (مهني vs آخر)',
+                    'نفس المسبب',
+                    'لا اختلاف'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'التشابه في الأعراض، الاختلاف في المسبب (مهني vs عوامل أخرى).',
+                explanationWrong: [
+                    'هناك تشابه في الأعراض.',
+                    'صحيح! تشابه في الأعراض واختلاف في المسبب.',
+                    'المسببات مختلفة.',
+                    'هناك اختلاف في المسبب.'
+                ]
+            },
+            {
+                id: 'c29',
+                conceptId: 'c6',
+                question: 'محلل: لماذا يعتبر السيليكوزيس مرضاً مهنياً خطيراً؟',
+                options: [
+                    'لأنه سريع العلاج',
+                    'لأنه غير قابل للانعكاس + تقدمي + يسبب عجز',
+                    'لأنه مؤقت',
+                    'لأنه لا يؤثر على الحياة'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'evaluate',
+                explanationCorrect: 'السيليكوزيس خطير لأنه غير قابل للانعكاس وتقدمي ويسبب عجزاً دائماً.',
+                explanationWrong: [
+                    'ليس سريع العلاج.',
+                    'صحيح! هذه هي أسباب خطورته.',
+                    'ليس مؤقتاً بل دائم.',
+                    'يؤثر بشكل كبير على الحياة.'
+                ]
+            },
+            {
+                id: 'c30',
+                conceptId: 'c8',
+                question: 'محلل: عامل يتعامل مع عدة مواد عصبية. كيف تحدد المادة المسببة؟',
+                options: [
+                    'لا يمكن تحديدها',
+                    'تاريخ التعرض + الأعراض المميزة + فحوصات مختبرية',
+                    'السؤال فقط',
+                    'التخمين'
+                ],
+                correctIndex: 1,
+                bloomLevel: 'analyze',
+                explanationCorrect: 'تحديد المادة يتطلب تاريخ التعرض والأعراض المميزة والفحوصات المختبرية.',
+                explanationWrong: [
+                    'يمكن التحديد بطرق علمية.',
+                    'صحيح! عدة طرق للتحديد.',
+                    'السؤال وحده غير كافٍ.',
+                    'التخمين غير علمي.'
+                ]
+            }
+        ];
+
+        // Flashcards Data
+        const flashcardsData = [
+            {
+                term: 'السلامة والصحة المهنية (Occupational Safety and Health)',
+                definition: 'مجال علمي يهتم بحماية العمال من المخاطر في بيئة العمل، ويشمل الوقاية من الحوادث والأمراض المهنية.',
+                examTip: 'ركز على الفرق بين السلامة (الحوادث) والصحة (الأمراض).'
+            },
+            {
+                term: 'الحادث المهني (Occupational Accident)',
+                definition: 'حدث مفاجئ يقع للعامل أثناء تأدية عمله أو بسببه، مما يؤدي إلى إصابته أو وفاته أو فقدان قدرته على العمل.',
+                examTip: 'العنصر الأساسي هو الارتباط بالعمل.'
+            },
+            {
+                term: 'معايير تشخيص المرض المهني',
+                definition: '1. وجود دليل على التعرض الكافي | 2. تطابق الآثار المعروفة | 3. فترة زمنية منطقية بين التعرض والتأثير',
+                examTip: 'الثلاثة معايير يجب توفرها جميعاً للتشخيص.'
+            },
+            {
+                term: 'الربو المهني (Occupational Asthma)',
+                definition: 'ربو ناتج عن التعرض لمواد مهنية في بيئة العمل. فترة الحضانة 4-8 ساعات.',
+                examTip: '10-25% من جميع حالات الربو هي مهنية.'
+            },
+            {
+                term: 'تلبُّد الرئة (Pneumoconiosis)',
+                definition: 'أمراض الرئة من استنشاق الغبار. تشمل: السيليكوزيس (السيليكا)، الأسبستوزيس (الأسبستوس)، فحمياً الرئة (الفحم).',
+                examTip: 'التليف غير قابل للانعكاس حتى بعد التوقف عن التعرض.'
+            },
+            {
+                term: 'التهاب الجلد التماسي المهيج الأولي',
+                definition: '70-80% من الأمراض الجلدية المهنية. تأثير مباشر فوري على الجلد.',
+                examTip: 'المفتاح: فوري التأثير، لا يحتاج فترة تحسس.'
+            },
+            {
+                term: 'التهاب الجلد التماسي التحسسي',
+                definition: '15-20% من الأمراض الجلدية المهنية. يحتاج لفترة تحسس أولية (أسابيع).',
+                examTip: 'المفتاح: يحتاج فترة تحسس، رد فعل مناعي.'
+            },
+            {
+                term: 'حدود التعرض المهنية (OEL)',
+                definition: 'MAC-TWA: متوسط 8 ساعات | MAC-STEL: 15 دقيقة قصيرة | MAC-C: حد أقصى فوري',
+                examTip: 'اعرف الفروق بين الأنواع الثلاثة.'
+            },
+            {
+                term: 'فترة الحضانة (Latency Period)',
+                definition: 'الفترة بين التعرض الأولي وظهور المرض. للمسرطنات: 4-40 سنة.',
+                examTip: 'الأمراض المهنية قد تظهر بعد سنوات طويلة.'
+            },
+            {
+                term: 'طرق دخول المواد الكيميائية',
+                definition: '1. الجهاز التنفسي (الغازات) | 2. الجلد (المذيبات الدهنية) | 3. الجهاز الهضمي (الابتلاع)',
+                examTip: 'المذيبات الدهنية تدخل بسرعة عبر الجلد.'
+            },
+            {
+                term: 'أول أكسيد الكربون (CO)',
+                definition: 'غاز عديم اللون والرائح يرتبط بالهيموغلوبين ويقلل نقل الأكسجين.',
+                examTip: 'ينتج من الاحتراق غير الكامل.'
+            },
+            {
+                term: 'البنزين والدم',
+                definition: 'يسبب فقر الدم الانحلالي (Aplastic anemia) وسرطان الدم (Leukemia).',
+                examTip: 'يؤثر على النخاع العظمي.'
+            },
+            {
+                term: 'الزئبق والجهاز العصبي',
+                definition: 'يسبب اضطرابات ذاكرة، رعشة، و"Mad Hatter disease" في المطابع.',
+                examTip: 'يؤثر على الجهاز العصبي المركزي والمحيطي.'
+            },
+            {
+                term: 'بطاقة بيانات السلامة (SDS)',
+                definition: 'وثيقة تحتوي على معلومات أساسية عن المواد الكيميائية: المخاطر، الإسعافات، التخزين.',
+                examTip: 'يجب توفرها لكل مادة كيميائية في مكان العمل.'
+            },
+            {
+                term: 'الكبد والمذيبات',
+                definition: 'الكبد يلعب دوراً رئيسياً في إزالة السموم. المذيبات تسبب تلف الكبد.',
+                examTip: 'التآزر بين الكحول والمذيبات يزيد الضرر.'
+            }
+        ];
+
+        // State Management
+        let currentState = {
+            currentTab: 'study',
+            studentName: '',
+            selectedModel: null,
+            currentExam: null,
+            currentQuestionIndex: 0,
+            answers: {},
+            examStartTime: null,
+            timerInterval: null,
+            flashcardIndex: 0,
+            flashcardFlipped: false,
+            attempts: [],
+            conceptMastery: {}
+        };
+
+        // Initialize from localStorage
+        function loadState() {
+            const saved = localStorage.getItem('oshMasteryState');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                currentState.studentName = parsed.studentName || '';
+                currentState.attempts = parsed.attempts || [];
+                currentState.conceptMastery = parsed.conceptMastery || {};
+
+                if (currentState.studentName) {
+                    document.getElementById('studentName').value = currentState.studentName;
+                    document.getElementById('userNameDisplay').textContent = currentState.studentName;
+                }
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem('oshMasteryState', JSON.stringify({
+                studentName: currentState.studentName,
+                attempts: currentState.attempts,
+                conceptMastery: currentState.conceptMastery
+            }));
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+
+            currentState.currentTab = tabId;
+            window.scrollTo(0, 0);
+
+            if (tabId === 'dashboard') {
+                updateDashboard();
+            }
+        }
+
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+        });
+
+        // Exam Functions
+        document.querySelectorAll('.model-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.model-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                currentState.selectedModel = card.dataset.model;
+                document.getElementById('startExamBtn').disabled = false;
+            });
+        });
+
+        document.getElementById('studentName').addEventListener('input', (e) => {
+            currentState.studentName = e.target.value.trim();
+            document.getElementById('userNameDisplay').textContent = currentState.studentName;
+            saveState();
+        });
+
+        document.getElementById('startExamBtn').addEventListener('click', startExam);
+        document.getElementById('nextQuestionBtn').addEventListener('click', nextQuestion);
+        document.getElementById('prevQuestionBtn').addEventListener('click', prevQuestion);
+        document.getElementById('submitExamBtn').addEventListener('click', submitExam);
+        document.getElementById('retakeExamBtn').addEventListener('click', () => {
+            document.getElementById('examResults').classList.add('hidden');
+            document.getElementById('examWelcome').classList.remove('hidden');
+        });
+        document.getElementById('weaknessRetestBtn').addEventListener('click', startWeaknessRetest);
+
+        function startExam() {
+            if (!currentState.studentName) {
+                alert('الرجاء إدخال اسمك الكريم');
+                return;
+            }
+
+            let questions;
+            switch(currentState.selectedModel) {
+                case 'A': questions = [...questionsModelA]; break;
+                case 'B': questions = [...questionsModelB]; break;
+                case 'C': questions = [...questionsModelC]; break;
+                default: questions = [...questionsModelA];
+            }
+
+            currentState.currentExam = questions;
+            currentState.currentQuestionIndex = 0;
+            currentState.answers = {};
+            currentState.examStartTime = Date.now();
+
+            document.getElementById('examWelcome').classList.add('hidden');
+            document.getElementById('examResults').classList.add('hidden');
+            document.getElementById('examContainer').classList.remove('hidden');
+
+            startTimer();
+            renderQuestion();
+        }
+
+        function startTimer() {
+            let minutes = 60;
+            let seconds = 0;
+
+            updateTimerDisplay(minutes, seconds);
+
+            currentState.timerInterval = setInterval(() => {
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(currentState.timerInterval);
+                        submitExam();
+                        return;
+                    }
+                    minutes--;
+                    seconds = 59;
+                } else {
+                    seconds--;
+                }
+
+                updateTimerDisplay(minutes, seconds);
+
+                if (minutes === 5 && seconds === 0) {
+                    document.getElementById('examTimer').classList.add('warning');
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay(minutes, seconds) {
+            document.getElementById('timerValue').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function renderQuestion() {
+            const question = currentState.currentExam[currentState.currentQuestionIndex];
+            const container = document.getElementById('questionsContainer');
+
+            const progress = ((currentState.currentQuestionIndex + 1) / currentState.currentExam.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('questionCounter').textContent = 
+                `السؤال ${currentState.currentQuestionIndex + 1} من ${currentState.currentExam.length}`;
+
+            const bloomClass = `tag-bloom-${question.bloomLevel}`;
+            const bloomText = {
+                'recall': 'تذكر',
+                'understand': 'فهم',
+                'apply': 'تطبيق',
+                'analyze': 'تحليل',
+                'evaluate': 'تقويم'
+            }[question.bloomLevel];
+
+            container.innerHTML = `
+                <div class="question-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <span class="question-number">س ${currentState.currentQuestionIndex + 1}</span>
+                        <span class="tag ${bloomClass}">${bloomText}</span>
+                    </div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options-list">
+                        ${question.options.map((option, index) => `
+                            <label class="option-item ${currentState.answers[question.id] === index ? 'selected' : ''}" data-index="${index}">
+                                <input type="radio" name="q${question.id}" value="${index}" 
+                                    ${currentState.answers[question.id] === index ? 'checked' : ''}>
+                                <span class="option-label">${['أ', 'ب', 'ج', 'د'][index]}</span>
+                                <span>${option}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            container.querySelectorAll('.option-item').forEach(item => {
+                item.addEventListener('click', () => selectAnswer(parseInt(item.dataset.index)));
+            });
+
+            document.getElementById('prevQuestionBtn').disabled = currentState.currentQuestionIndex === 0;
+
+            if (currentState.currentQuestionIndex === currentState.currentExam.length - 1) {
+                document.getElementById('nextQuestionBtn').classList.add('hidden');
+                document.getElementById('submitExamBtn').classList.remove('hidden');
+            } else {
+                document.getElementById('nextQuestionBtn').classList.remove('hidden');
+                document.getElementById('submitExamBtn').classList.add('hidden');
+            }
+        }
+
+        function selectAnswer(index) {
+            const question = currentState.currentExam[currentState.currentQuestionIndex];
+            currentState.answers[question.id] = index;
+
+            document.querySelectorAll('.option-item').forEach((item, i) => {
+                item.classList.toggle('selected', i === index);
+            });
+        }
+
+        function nextQuestion() {
+            if (currentState.currentQuestionIndex < currentState.currentExam.length - 1) {
+                currentState.currentQuestionIndex++;
+                renderQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentState.currentQuestionIndex > 0) {
+                currentState.currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        function submitExam() {
+            clearInterval(currentState.timerInterval);
+
+            const answered = Object.keys(currentState.answers).length;
+            if (answered < currentState.currentExam.length) {
+                if (!confirm(`لم تجب على ${currentState.currentExam.length - answered} أسئلة. هل تريد الإرسال؟`)) {
+                    startTimer();
+                    return;
+                }
+            }
+
+            const results = calculateResults();
+            showResults(results);
+        }
+
+        function calculateResults() {
+            let correct = 0;
+            let wrong = 0;
+            const conceptStats = {};
+
+            currentState.currentExam.forEach(q => {
+                const answer = currentState.answers[q.id];
+                const isCorrect = answer === q.correctIndex;
+
+                if (isCorrect) correct++;
+                else if (answer !== undefined) wrong++;
+
+                if (!conceptStats[q.conceptId]) {
+                    conceptStats[q.conceptId] = { total: 0, correct: 0 };
+                }
+                conceptStats[q.conceptId].total++;
+                if (isCorrect) conceptStats[q.conceptId].correct++;
+            });
+
+            return { correct, wrong, conceptStats };
+        }
+
+        function showResults(results) {
+            document.getElementById('examContainer').classList.add('hidden');
+            document.getElementById('examResults').classList.remove('hidden');
+            document.getElementById('examTimer').classList.remove('warning');
+
+            const total = currentState.currentExam.length;
+            const answered = Object.keys(currentState.answers).length;
+            const score = Math.round((results.correct / total) * 100);
+            const passed = score >= courseData.passingScore;
+
+            const scoreCircle = document.getElementById('scoreCircle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            document.getElementById('scoreValue').textContent = `${score}%`;
+
+            resultMessage.className = `result-message ${passed ? 'pass' : 'fail'}`;
+            resultMessage.textContent = passed ? '🎉 تهانينا! لقد نجحت' : '❌ لم تصل لدرجة النجاح';
+
+            document.getElementById('resultDetails').textContent = 
+                `أجبت على ${answered} من ${total} أسئلة | ${results.correct} صحيحة | ${results.wrong} خاطئة`;
+
+            document.getElementById('correctCount').textContent = results.correct;
+            document.getElementById('wrongCount').textContent = results.wrong;
+
+            const timeTaken = Math.floor((Date.now() - currentState.examStartTime) / 1000);
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            document.getElementById('timeTaken').textContent = 
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+            const avgTime = Math.floor(timeTaken / answered) || 0;
+            const avgMin = Math.floor(avgTime / 60);
+            const avgSec = avgTime % 60;
+            document.getElementById('avgTime').textContent = 
+                `${avgMin}:${avgSec.toString().padStart(2, '0')}`;
+
+            // Concept Analysis
+            const conceptAnalysis = document.getElementById('conceptAnalysis');
+            conceptAnalysis.innerHTML = '';
+
+            Object.entries(results.conceptStats).forEach(([conceptId, stats]) => {
+                const concept = courseData.concepts.find(c => c.id === conceptId);
+                const mastery = Math.round((stats.correct / stats.total) * 100);
+                const isMastered = mastery >= 70;
+
+                if (!currentState.conceptMastery[conceptId]) {
+                    currentState.conceptMastery[conceptId] = { total: 0, correct: 0 };
+                }
+                currentState.conceptMastery[conceptId].total += stats.total;
+                currentState.conceptMastery[conceptId].correct += stats.correct;
+
+                conceptAnalysis.innerHTML += `
+                    <div class="concept-mastery-item">
+                        <div class="concept-mastery-header">
+                            <span class="concept-mastery-name">${concept ? concept.name : conceptId}</span>
+                            <span class="concept-mastery-score ${isMastered ? 'mastered' : 'weak'}">
+                                ${mastery}% (${stats.correct}/${stats.total})
+                            </span>
+                        </div>
+                        <div class="mastery-bar">
+                            <div class="mastery-fill ${isMastered ? 'mastered' : 'weak'}" style="width: ${mastery}%"></div>
+                        </div>
+                        ${!isMastered ? `<p style="margin-top:8px; font-size:13px; color:var(--danger);">
+                            ⚠️ <a href="#${concept ? concept.anchor : ''}" onclick="switchTab('study')">راجع هذا المفهوم</a>
+                        </p>` : ''}
+                    </div>
+                `;
+            });
+
+            // Save attempt
+            currentState.attempts.push({
+                date: new Date().toISOString(),
+                model: currentState.selectedModel,
+                score: score,
+                passed: passed,
+                correct: results.correct,
+                total: total
+            });
+
+            saveState();
+        }
+
+        function startWeaknessRetest() {
+            const weakConcepts = Object.entries(currentState.conceptMastery)
+                .filter(([_, stats]) => (stats.correct / stats.total) * 100 < 70)
+                .map(([id, _]) => id);
+
+            if (weakConcepts.length === 0) {
+                alert('مبروك! ليس لديك نقاط ضعف. جرب نموذجاً جديداً.');
+                return;
+            }
+
+            const allQuestions = [...questionsModelA, ...questionsModelB, ...questionsModelC];
+            const weaknessQuestions = allQuestions.filter(q => weakConcepts.includes(q.conceptId));
+
+            const shuffled = weaknessQuestions.sort(() => Math.random() - 0.5).slice(0, 20);
+
+            currentState.currentExam = shuffled;
+            currentState.currentQuestionIndex = 0;
+            currentState.answers = {};
+            currentState.examStartTime = Date.now();
+            currentState.selectedModel = 'W';
+
+            document.getElementById('examWelcome').classList.add('hidden');
+            document.getElementById('examResults').classList.add('hidden');
+            document.getElementById('examContainer').classList.remove('hidden');
+
+            startTimer();
+            renderQuestion();
+        }
+
+        // Flashcard Functions
+        document.getElementById('flashcard').addEventListener('click', flipFlashcard);
+        document.getElementById('flipFlashcardBtn').addEventListener('click', flipFlashcard);
+        document.getElementById('nextFlashcardBtn').addEventListener('click', nextFlashcard);
+        document.getElementById('prevFlashcardBtn').addEventListener('click', prevFlashcard);
+
+        function renderFlashcard() {
+            const card = flashcardsData[currentState.flashcardIndex];
+            document.getElementById('flashcardTerm').textContent = card.term;
+            document.getElementById('flashcardDefinition').textContent = card.definition;
+            document.getElementById('flashcardExamTip').textContent = card.examTip;
+            document.getElementById('flashcardCounter').textContent = 
+                `${currentState.flashcardIndex + 1} / ${flashcardsData.length}`;
+
+            document.getElementById('flashcard').classList.remove('flipped');
+            currentState.flashcardFlipped = false;
+        }
+
+        function flipFlashcard() {
+            document.getElementById('flashcard').classList.toggle('flipped');
+            currentState.flashcardFlipped = !currentState.flashcardFlipped;
+        }
+
+        function nextFlashcard() {
+            if (currentState.flashcardIndex < flashcardsData.length - 1) {
+                currentState.flashcardIndex++;
+                renderFlashcard();
+            }
+        }
+
+        function prevFlashcard() {
+            if (currentState.flashcardIndex > 0) {
+                currentState.flashcardIndex--;
+                renderFlashcard();
+            }
+        }
+
+        // Dashboard Functions
+        function updateDashboard() {
+            document.getElementById('totalAttempts').textContent = currentState.attempts.length;
+
+            if (currentState.attempts.length > 0) {
+                const scores = currentState.attempts.map(a => a.score);
+                const bestScore = Math.max(...scores);
+                const avgScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+
+                document.getElementById('bestScore').textContent = `${bestScore}%`;
+                document.getElementById('avgScore').textContent = `${avgScore}%`;
+
+                const historyHtml = currentState.attempts.slice(-5).reverse().map(a => {
+                    const date = new Date(a.date);
+                    const dateStr = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+                    return `
+                        <div class="attempt-item">
+                            <div>
+                                <div>${dateStr}</div>
+                                <div class="attempt-date">نموذج ${a.model}</div>
+                            </div>
+                            <span class="attempt-score ${a.passed ? 'pass' : 'fail'}">${a.score}%</span>
+                        </div>
+                    `;
+                }).join('');
+
+                document.getElementById('attemptsHistory').innerHTML = historyHtml || '<p style="color:var(--text-muted);">لا توجد محاولات بعد</p>';
+            } else {
+                document.getElementById('bestScore').textContent = '0%';
+                document.getElementById('avgScore').textContent = '0%';
+                document.getElementById('attemptsHistory').innerHTML = '<p style="color:var(--text-muted);">لا توجد محاولات بعد</p>';
+            }
+
+            // Mastery Dashboard
+            const masteryContainer = document.getElementById('masteryDashboard');
+            masteryContainer.innerHTML = '';
+
+            courseData.concepts.forEach(concept => {
+                const stats = currentState.conceptMastery[concept.id];
+                if (stats && stats.total > 0) {
+                    const mastery = Math.round((stats.correct / stats.total) * 100);
+                    const isMastered = mastery >= 70;
+
+                    masteryContainer.innerHTML += `
+                        <div class="concept-mastery-item">
+                            <div class="concept-mastery-header">
+                                <span class="concept-mastery-name">${concept.name}</span>
+                                <span class="concept-mastery-score ${isMastered ? 'mastered' : 'weak'}">
+                                    ${mastery}%
+                                </span>
+                            </div>
+                            <div class="mastery-bar">
+                                <div class="mastery-fill ${isMastered ? 'mastered' : 'weak'}" style="width: ${mastery}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            if (masteryContainer.innerHTML === '') {
+                masteryContainer.innerHTML = '<p style="color:var(--text-muted); text-align:center;">أكمل اختباراً لرؤية تحليل المفاهيم</p>';
+            }
+        }
+
+        document.getElementById('clearDataBtn').addEventListener('click', () => {
+            if (confirm('هل أنت متأكد من مسح جميع بياناتك؟')) {
+                localStorage.removeItem('oshMasteryState');
+                currentState.attempts = [];
+                currentState.conceptMastery = {};
+                currentState.studentName = '';
+                document.getElementById('studentName').value = '';
+                document.getElementById('userNameDisplay').textContent = '';
+                updateDashboard();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            renderFlashcard();
+        });
+    </script>
+</body>
+</html>
